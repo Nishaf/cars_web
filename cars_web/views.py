@@ -3,7 +3,7 @@ from django.views.generic import View
 from .models import CarsDetails, CarModels
 from django.http import JsonResponse
 import json, re
-from Cars_Scrapers.autotrader import get_auto_trader_data, get_carsforsale_data
+from cars_web.Cars_Scrapers.autotrader import get_auto_trader_data, get_carsforsale_data
 from .global_variables import auto_trader_years_list
 
 class Homepage(View):
