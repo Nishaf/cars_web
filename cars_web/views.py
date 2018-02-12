@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.views.generic import View
 from .models import CarsDetails, CarModels
 from django.http import JsonResponse
-import json, re
-from cars_web.Cars_Scrapers.autotrader import get_auto_trader_data, get_carsforsale_data
+import re
+from cars_web.autotrader import get_auto_trader_data, get_carsforsale_data
 from .global_variables import auto_trader_years_list
 
 class Homepage(View):
