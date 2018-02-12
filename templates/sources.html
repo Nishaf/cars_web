@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+
+<style>
+.rating {
+            border: none;
+            float: right;
+            padding: 2px 140px 0 0;
+        }
+</style>
+
+{% endblock %}
+
+{% block text %}
+    View Vendors Here
+{% endblock %}
+
+
+{% block content %}
+    <div class="container" style="height:100%;padding-bottom:50px;background-color: white;">
+        <div class="form-group" style="margin-top: 20px;">
+            <input type="hidden" value="All" id="country">
+            <label for="sel1"><strong>Domestic Country</strong></label>
+            <select class="selectpicker" id="country_sort" style="width: 150px;height:30px; background-color: white;">
+                <option>All</option>
+                {% for c in domestic_countries %}
+                    <option {% if c == country %} selected {% endif %}>{{ c }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="row">
+            <div class="bg-dark" style="height: 40px;color: white;width:100%; font-size: 20px;">
+                <span style="padding:2px 0 0 30px; vertical-align: middle;">Sources</span>
+                <span style="padding:2px 150px 0 0; float: right;vertical-align: middle;">Rating</span>
+            </div>
+            <div style="padding: 10px 0 5px 20px;" id="table">
+                <table class="table table-sm" style="border-top: hidden;">
+                    <tbody>
+                        <!--<tr>
+                            <td scope="row" class="bottom-border"><a>Vendor1</a></td>
+                        </tr>
+                        <tr>
+                            <td scope="row" class="bottom-border"><a>Vendor1</a></td>
+                        </tr>
+                        <tr >
+                            <td scope="row" class="bottom-border"><a href="{%  url  'reviews' web_title='promusclepharma.com' %}">ProMusclePharma</a></td>
+                        </tr>-->
+                        {% for i in vendors %}
+                            <tr>
+                                <td scope="row" class="bottom-border"><a href="{%  url  'reviews' web_title=i.vendor_name %}">{{ i.vendor_name }}</a></td>
+                                <td scope="row" class="bottom-border">
+                                    <fieldset class="rating">
+                                        {% for value in i.negative_values %}
+                                            <input name="rating" disabled/><label class="full"></label>
+                                        {% endfor %}
+                                        {% if not i.positive_float %}
+                                            <input name="rating" disabled/><label class="full"></label>
+                                            <input name="rating" disabled/><label class="half label1"></label>
+                                        {% endif %}
+                                        {% for i in i.positive_values %}
+                                            <input name="rating" disabled/><label class="full label1"></label>
+                                        {% endfor %}
+
+                                    </fieldset>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <nav aria-label="Page navigation example" >
+          <ul class="pagination justify-content-center" id="pagination_data">
+            <li class="page-item {% if prev_page_disabled %}disabled{% endif %}">
+              <a class="page-link" href="{% url 'vendors_pagination' page_no=prev_page country=country  %}" >Previous</a>
+            </li>
+              {% for i in pages %}
+                  <li class="page_item">
+                      <a class="page-link {% if selected == i %}selected{% endif %}" href="{% url 'vendors_pagination' country=country page_no=i %}">{{ i }}</a>
+                  </li>
+              {% endfor %}
+            <li class="page-item {% if next_page_disabled %}disabled{% endif %}">
+              <a class="page-link" href="{% url 'vendors_pagination' country=country page_no=next_page %}">Next</a>
+            </li>
+          </ul>
+        </nav>
+
+    <!--<div class="container row" align="center">
+            <div class="col-md-5"></div>
+            <div class="col-md-6 mr-auto">
+                <ul class="pagination" style="position: fixed;width: 50%;bottom: 10px;">
+                <li class="page-item">
+                  <a class="page-link {% if prev_page_disabled %}disabled{% endif %}" href="" aria-label="Previous">
+                    <span aria-hidden="true" title="Previous Page">&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link {% if next_page_disabled %}disabled{% endif %}" href="" aria-label="Next">
+                    <span aria-hidden="true" title="Next Page">&raquo;</span>
+                  </a>
+                </li>
+            </ul>
+            </div>
+        </div>-->
+    </div>
+
+    <script language="JavaScript" type="text/javascript" src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+
+            $("#country_sort").change(function(){
+               //document.getElementById('country').value = $('#country_sort').val();
+                window.location.href = '/sources/'+$('#country_sort').val();
+                //const http = new XMLHttpRequest();
+
+                //http.open("GET", "/sort/sources/country?country="+$('#country_sort').val(), false);
+                //http.send();
+                /*
+                $.ajax({
+                    type: "GET",
+                    url: '/sort/sources/country/',
+                    data: {
+                        'country': $('#country_sort').val()
+                    },
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function(data) {
+                        if(data.res == 'sorted') {
+                            var table = document.getElementById('table');
+                            var pagination = document.getElementById('pagination_data');
+                            var response_data = '<table class="table table-sm" style="border-top: hidden;"><tbody>';
+                            $.each(data.items_list, function (key, value) {
+                                response_data += '<td scope="row" class="bottom-border"><a href="/reviews/' + value['vendor_name'] + '">' + value['vendor_name'] + '</a></td>';
+                                response_data += '<td class="bottom-border"><fieldset class="rating">';
+                                for (var i = 0; i < value['negative_values']; i++) {
+                                    response_data += '<input name="rating" disabled/><label class="full"></label>';
+                                }
+                                if (!value['positive_float']) {
+                                    response_data += ' <input name="rating" disabled/><label class="full"></label>' +
+                                        '<input name="rating" disabled/><label class="half label1"></label>';
+                                }
+                                for (var k = 0; k < value['positive_values']; k++) {
+                                    response_data += '<input name="rating" disabled/><label class="full label1"></label>';
+                                }
+
+                                response_data += '</fieldset></td></tr>';
+                            });
+                            var response_data1 = '<li class="page-item';
+                            if (data.prev_page_disabled) {
+                                response_data1 += ' disabled';
+                            }
+                            response_data1 += '">';
+                            response_data1 += '<a class="page-link" href="/sources/' + data.country + '/page/' + data.page_no + '/">Previous</a></li>';
+                            $.each(data.pages, function (key, value) {
+                                response_data1 += '<li class="page_item">';
+                                response_data1 += '<a class="page-link';
+                                if (data.selected == value) {
+                                    response_data1 += ' selected';
+                                }
+                                response_data1 += '" href="/sources/' + data.country + '/page/' + value + '/">'+value+'</a></li>';
+                                response_data1 += '<li class="page-item';
+                                if (data.next_page_disabled) {
+                                    response_data1 += ' disabled';
+                                }
+                                response_data1 += '">';
+                            });
+                            response_data1 += '<a class="page-link" href="href="/sources/' + data.country + '/page/' + data.next_page + '/">Next</a></li>';
+                            table.innerHTML = response_data;
+                            pagination.innerHTML = response_data1;
+                        }
+                    }
+                });*/
+            });
+        });
+    </script>
+{% endblock %}

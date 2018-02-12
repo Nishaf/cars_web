@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block text %}
+    View HomePage
+{% endblock %}
+{% block content %}
+    <div class="container" style="height:100%;padding-bottom:50px;background-color: white;" align="center">
+        <div class="row" style="padding-top: 100px;">
+            <div class="card" style="border: 1px solid darkgray;width:80%;margin-left: 140px;">
+                <div class="card-header">
+                    AutoTraders.com
+                </div>
+                <div class="card-block">
+                    <div class="card-text row" style="padding: 30px 15px 10px 15px; height: 140px;">
+                        <div class="col-md-3">
+                            <span>Make</span>
+                            <select id="auto_trader_make" style="width: 220px;">
+                                {% if cars %}
+                                    {% for car in cars %}
+                                        {% if car.0 == 'autotrader.com' %}
+                                            <option>{{ car.1 }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
+
+                        </div>
+                        <div class="col-md-3" align="center">
+                            <span>Model</span>
+                            <select id="auto_trader_model" style="width: 220px;">
+                                <option>Any Model</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" align="right">
+                            <span>Min Year</span>
+                            <select id="auto_trader_min_year" style="width: 180px;">
+                                <option>Any Year</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" align="right" style="padding-left: 60px;">
+                            <span>Max Year</span>
+                            <select id="auto_trader_max_year" style="width: 180px;">
+                                <option>Any Year</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" style="padding: 60px 0 80px 0;">
+                            <button class="btn btn-success" id="auto_trader_submit" onclick="call_func('autotrader.com')">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="row" style="padding-top: 30px;">
+            <div class="card" style="border: 1px solid darkgray;width:80%;margin-left: 140px;">
+                <div class="card-header">
+                    CarsForSale.com
+                </div>
+                <div class="card-block">
+                    <div class="card-text row" style="padding: 30px 15px 10px 15px; height: 120px;">
+                        <div class="col-md-3">
+                            <select id="carsforsale_make" style="width: 220px;">
+                                {% if cars %}
+                                    {% for car in cars %}
+                                        {% if car.0 == 'carsforsale.com' %}
+                                            <option>{{ car.1 }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
+
+                        </div>
+                        <div class="col-md-3">
+                            <select id="carsforsale_model" style="width: 220px;">
+                                <option>Any Model</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select id="carsforsale_years" style="width: 220px;">
+                                <option>Any Year</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-success" id="carsforsale_submit" onclick="call_func('carsforsale.com')">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="padding: 50px;">
+        <div class="col-md-12 row" style="padding-top: 30px;">
+            <!--<div class="bg-dark" style="height: 40px;color: white;width:100%; font-size: 20px;" align="left">
+                <span style="padding:2px 0 0 0; vertical-align: middle;">Sources</span>
+                <span style="padding:2px 150px 0 0; float: right;vertical-align: middle;">Rating</span>
+            </div>-->
+            <div class="col-md-4"  style="width: 100%;" id="auto_trader_table">
+            </div>
+            <!--<div class="col-md-4"  style="width: 100%;" id="cars_table">
+            </div>-->
+            <div class="col-md-4"  style="width: 100%;" id="carsforsale_table">
+            </div>
+        </div>
+    </div>
+    <script language="JavaScript" type="text/javascript" src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script>
+        var website_names = [];
+
+         $(document).ready(function() {
+                 $.ajaxSetup({cache: false}); // This part addresses an IE bug.  without it, IE will only load the first number and will never refresh
+                 var my_refresh = setInterval(function () {
+                     for (var i=0; i < website_names.length; i++) {
+                         call_func(website_names[i]);
+                     }
+                 }, 60000); // the "1000"
+
+         });
+        function call_func(website) {
+            if(website == 'carsforsale.com') {
+                $.ajax({
+                    type: "GET",
+                    url: '/get/results/',
+                    data: {
+                        'make': $('#carsforsale_make').val(),
+                        'model': $('#carsforsale_model').val(),
+                        'year': $('#carsforsale_years').val(),
+                        'website': website
+
+                    },
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.res == 'success') {
+                            //var cars = document.getElementById('cars_table');
+                            //var cars_for_sale = document.getElementById('cars_for_sale_table');
+                            var carsforsale_table = document.getElementById('carsforsale_table');
+                            var currentdate = new Date();
+                            var response_data = '<div align="center">Updated At: <strong>' + +currentdate.getHours() + ":" +
+                                currentdate.getMinutes() + ":" + currentdate.getSeconds() + '</strong></div>';
+                            response_data += '<table class="table table-bordered" ><thead>' +
+                                ' <tr><th>CarsForSale.com</th></tr></thead><tbody>';
+
+                            $.each(data.cars_details, function (key, value) {
+                                response_data += '<tr>' +
+                                    '<td><a href="' + value['link'] + '" target="_blank">' + value['title'] + '</a></td>';
+                            });
+
+                            carsforsale_table.innerHTML = response_data;
+                            if($.inArray('carsforsale.com', website_names) == -1){
+                                website_names.push('carsforsale.com');
+                            }
+                            //cars.innerHTML = response_data;
+                            //cars_for_sale.innerHTML = response_data;
+                        }
+                    }
+                });
+            }
+            else if (website == 'autotrader.com'){
+                $.ajax({
+                    type: "GET",
+                    url: '/get/results/',
+                    data: {
+                        'make': $('#auto_trader_make').val(),
+                        'model': $('#auto_trader_model').val(),
+                        'min_year': $('#auto_trader_min_year').val(),
+                        'max_year': $('#auto_trader_max_year').val(),
+                        'website': website
+
+                    },
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function(data) {
+                        if(data.res == 'success') {
+                            var auto_trader_table = document.getElementById('auto_trader_table');
+                            var currentdate = new Date();
+                            var response_data = '<div align="center">Updated At: <strong>' + + currentdate.getHours() + ":" +
+                                currentdate.getMinutes() + ":" + currentdate.getSeconds()+ '</strong></div>';
+                            response_data += '<table class="table table-bordered" ><thead>' +
+                                ' <tr><th>AutoTraders.com</th></tr></thead><tbody>';
+
+                            $.each(data.cars_details, function (key, value) {
+                                response_data += '<tr>' +
+                                    '<td><a href="'+ value['link']+'" target="_blank">'+value['title'] + '</a></td>';
+                            });
+
+                            auto_trader_table.innerHTML = response_data;
+                            if($.inArray('autotrader.com', website_names) == -1){
+                                website_names.push('autotrader.com');
+                            }
+
+                            //setup_ajax(website);
+                            //cars.innerHTML = response_data;
+                            //cars_for_sale.innerHTML = response_data;
+
+                        }
+                    }
+
+                });
+            }
+
+        }
+         $(document).ready(function(){
+            $("#auto_trader_make").change(function(){
+                $.ajax({
+                    type: "GET",
+                    url: '/get/models/',
+                    data: {
+                        'make': $('#auto_trader_make').val(),
+                        'website': 'autotrader.com'
+                    },
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function(data) {
+                        if(data.res == 'success') {
+                            var auto_trader_models = document.getElementById('auto_trader_model');
+                            var auto_trader_min_year = document.getElementById('auto_trader_min_year');
+                            var auto_trader_max_year = document.getElementById('auto_trader_max_year');
+                            var response_data = '';
+                            var response_data1 = '';
+                            $.each(data.models, function (key, value) {
+                                response_data += '<option>' + value['model'] + '</option>';
+                            });
+                            $.each(data.years, function (key, value) {
+                                response_data1 += '<option>' + value + '</option>';
+                            });
+                            auto_trader_models.innerHTML = response_data;
+                            auto_trader_min_year.innerHTML = response_data1;
+                            auto_trader_max_year.innerHTML = response_data1;
+                        }
+                    }
+                });
+            });
+        });
+         $(document).ready(function(){
+            $("#carsforsale_make").change(function(){
+                $.ajax({
+                    type: "GET",
+                    url: '/get/models/',
+                    data: {
+                        'make': $('#carsforsale_make').val(),
+                        'website': 'carsforsale.com'
+                    },
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function(data) {
+                        if(data.res == 'success') {
+                            var auto_trader_models = document.getElementById('carsforsale_model');
+                            var auto_trader_years = document.getElementById('carsforsale_years');
+                            var response_data = '';
+                            var response_data1 = '';
+                            $.each(data.models, function (key, value) {
+                                response_data += '<option>' + value['model'] + '</option>';
+                            });
+                            $.each(data.years, function (key, value) {
+                                response_data1 += '<option>' + value + '</option>';
+                            });
+                            auto_trader_models.innerHTML = response_data;
+                            auto_trader_years.innerHTML = response_data1;
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
