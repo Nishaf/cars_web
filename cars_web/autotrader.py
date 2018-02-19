@@ -25,13 +25,14 @@ def delete_previous_results(website, make, model):
     if CarsDetails.objects.filter(website=website, make=make, model=model).count() > 0:
         CarsDetails.objects.filter(website=website, make=make, model=model).all().delete()
 
+
 def get_auto_trader_data(make, model, min_year, max_year):
     delete_previous_results('autotrader.com', make, model)
     print('Retrieving Results....')
     url = 'https://www.autotrader.com/cars-for-sale/'
     url_changed = url + make + "/" + model + "/?startYear=" +min_year+ "&endYear=" + max_year + "&numRecords=100"
     print(url_changed)
-    data = requests.get(url_changed, headers=headers, proxies=proxy)
+    data = requests.get(url_changed, headers=headers, proxies=proxy, verify=False)
     soup = BeautifulSoup(data.text)
     premium_listing = soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-premium'})
     listing = premium_listing + soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-featured'})
@@ -51,7 +52,7 @@ def get_cars_data(make_id, made_id):
     print(make_id, made_id)
     url1 = 'https://www.cars.com/for-sale/searchresults.action/?mdId=55767&mkId=33583&page=1&perPage=100' #'https://www.cars.com/for-sale/searchresults.action?mkId='+ str(make_id) + '&mdId='+str(made_id)+'&page=1&perPage=100&&zc='
     print('Loading Data....')
-    data = requests.get(url1, headers=headers, proxies=proxy)
+    data = requests.get(url1, headers=headers, proxies=proxy, verify=False)
     soup = BeautifulSoup(data.text)
     listing = soup.find_all('div', attrs={'class': 'shop-srp-listings__listing'})
     print(len(listing))
