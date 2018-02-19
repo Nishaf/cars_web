@@ -78,6 +78,13 @@ WSGI_APPLICATION = 'cars_web.wsgi.application'
 
 DATABASES = {
      'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+'''
+DATABASES = {
+     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'cars',
         'USER': 'postgres',
@@ -85,6 +92,7 @@ DATABASES = {
         'HOST': '127.0.0.1',
     }
 }
+'''
 
 
 # Internationalization
