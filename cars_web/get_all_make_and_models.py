@@ -1,4 +1,5 @@
 import os, sys, django
+print(os.getcwd())
 sys.path.append(os.getcwd())  # here store is root folder(means parent).
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cars_web.settings")
 django.setup()
