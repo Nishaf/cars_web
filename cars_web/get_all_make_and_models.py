@@ -10,7 +10,7 @@ from time import sleep
 from cars_web.models import CarModels
 
 
-class PopulateSelectingDatabase():
+class PopulateSelectingDatabase:
     def __init__(self):
         display = Display(visible=0, size=(1500,800))
         display.start()
