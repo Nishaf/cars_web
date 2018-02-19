@@ -14,7 +14,7 @@ class PopulateSelectingDatabase():
     def __init__(self):
         display = Display(visible=0, size=(1500,800))
         display.start()
-        self.driver = webdriver.Chrome(os.getcwd() + '/chromedriver')#, chrome_options=self.get_chrome_options())
+        self.driver = webdriver.Chrome('/root/cars_web/cars_web/chromedriver')#, chrome_options=self.get_chrome_options())
         self.autotrader = 'https://www.autotrader.com/'
         self.carsdotcom = 'https://www.cars.com/'
         self.carsforsale = 'https://www.carsforsale.com'
