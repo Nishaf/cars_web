@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9c5c53bd-f0e0-4237-b894-114ff5df938d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/cars_web/settings.py" afterPath="$PROJECT_DIR$/cars_web/settings.py" />
+      <change beforePath="$PROJECT_DIR$/cars_web/get_all_make_and_models.py" afterPath="$PROJECT_DIR$/cars_web/get_all_make_and_models.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,7 +24,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cars_web/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="233">
@@ -64,11 +64,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="get_all_make_and_models.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="get_all_make_and_models.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cars_web/get_all_make_and_models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="479">
-              <caret line="80" column="96" lean-forward="false" selection-start-line="80" selection-start-column="96" selection-end-line="80" selection-end-column="96" />
+            <state relative-caret-position="419">
+              <caret line="126" column="16" lean-forward="false" selection-start-line="126" selection-start-column="16" selection-end-line="126" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -168,6 +168,7 @@
         <option value="$PROJECT_DIR$/cars_web/views.py" />
         <option value="$PROJECT_DIR$/cars_web/autotrader.py" />
         <option value="$PROJECT_DIR$/cars_web/settings.py" />
+        <option value="$PROJECT_DIR$/cars_web/get_all_make_and_models.py" />
       </list>
     </option>
   </component>
@@ -610,7 +611,14 @@
       <option name="project" value="LOCAL" />
       <updated>1519052898127</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Changed">
+      <created>1519053010526</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1519053010526</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1070,14 +1078,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cars_web/get_all_make_and_models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="479">
-          <caret line="80" column="96" lean-forward="false" selection-start-line="80" selection-start-column="96" selection-end-line="80" selection-end-column="96" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cars_web/autotrader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="94">
@@ -1090,6 +1090,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="233">
           <caret line="27" column="20" lean-forward="false" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cars_web/get_all_make_and_models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="419">
+          <caret line="126" column="16" lean-forward="false" selection-start-line="126" selection-start-column="16" selection-end-line="126" selection-end-column="16" />
           <folding />
         </state>
       </provider>

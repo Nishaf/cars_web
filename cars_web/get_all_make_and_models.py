@@ -8,6 +8,8 @@ from pyvirtualdisplay import Display
 from selenium.webdriver.common.keys import Keys
 from time import sleep
 from cars_web.models import CarModels
+
+
 class PopulateSelectingDatabase():
     def __init__(self):
         display = Display(visible=0, size=(1500,800))
@@ -121,5 +123,7 @@ class PopulateSelectingDatabase():
                 print("Exception Occured")
                 print(e)
                 continue
+
+
 #CarModels.objects.filter(website='carsforsale.com').all().delete()
-PopulateSelectingDatabase().run_carsforsale()
+PopulateSelectingDatabase().run_autotrader()
