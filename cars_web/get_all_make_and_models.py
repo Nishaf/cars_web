@@ -1,5 +1,5 @@
 import os, sys, django
-sys.path.append("/home/nishaf/PycharmProjects/Upwork_Projects")  # here store is root folder(means parent).
+sys.path.append(os.getcwd())  # here store is root folder(means parent).
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cars_web.settings")
 django.setup()
 
