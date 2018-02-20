@@ -6,6 +6,7 @@ import re
 from .autotrader import get_auto_trader_data, get_carsforsale_data
 from .global_variables import auto_trader_years_list
 
+
 class Homepage(View):
     def get(self, request):
         cars = CarModels.objects.all()
