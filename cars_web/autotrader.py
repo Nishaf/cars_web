@@ -49,7 +49,7 @@ def get_auto_trader_data(make, model, min_year, max_year):
         print(title, link)
         save_data('autotrader.com', make, model, title, link)
 
-get_auto_trader_data('Acura','Integra', '1981','2016')
+#get_auto_trader_data('Acura','Integra', '1981','2016')
 
 def get_cars_data(make_id, made_id):
     print(make_id, made_id)
