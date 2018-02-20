@@ -34,7 +34,6 @@ def get_auto_trader_data(make, model, min_year, max_year):
     print(url_changed)
     data = requests.get(url_changed, headers=headers, proxies=proxy)
     print(data.status_code)
-    print(data.text)
     soup = BeautifulSoup(data.text)
     premium_listing = soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-premium'})
     listing = premium_listing + soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-featured'})
