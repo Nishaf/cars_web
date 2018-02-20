@@ -28,7 +28,7 @@ def get_auto_trader_data(make, model, min_year, max_year):
     url = 'https://www.autotrader.com/cars-for-sale/'
     url_changed = url + make + "/" + model + "/?startYear=" +min_year+ "&endYear=" + max_year + "&numRecords=100"
     print(url_changed)
-    data = requests.get(url_changed, headers=headers)
+    data = requests.get(url_changed)
     print(data.status_code)
     print(data.text)
     soup = BeautifulSoup(data.text)
@@ -50,7 +50,7 @@ def get_cars_data(make_id, made_id):
     print(make_id, made_id)
     url1 = 'https://www.cars.com/for-sale/searchresults.action/?mdId=55767&mkId=33583&page=1&perPage=100' #'https://www.cars.com/for-sale/searchresults.action?mkId='+ str(make_id) + '&mdId='+str(made_id)+'&page=1&perPage=100&&zc='
     print('Loading Data....')
-    data = requests.get(url1, headers=headers, proxies=proxy, verify=False)
+    data = requests.get(url1, headers=headers)#, proxies=proxy, verify=False)
     soup = BeautifulSoup(data.text)
     listing = soup.find_all('div', attrs={'class': 'shop-srp-listings__listing'})
     print(len(listing))
