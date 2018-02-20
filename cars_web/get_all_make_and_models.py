@@ -21,7 +21,7 @@ class PopulateSelectingDatabase:
         self.carsforsale = 'https://www.carsforsale.com'
 
     def get_chrome_options(self):
-        PROXY = '144.217.213.234:1080'
+        PROXY = '-'
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--proxy-server=%s' % PROXY)
         return chrome_options

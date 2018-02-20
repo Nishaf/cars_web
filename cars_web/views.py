@@ -41,7 +41,9 @@ class RetrieveAutoTraderResults(View):
         return make, model
     def get(self, request):
         website = request.GET['website']
+        print(website)
         if website == 'autotrader.com':
+            print('here')
             make, model = self.get_results(request)
             cars_data = list(CarsDetails.objects.filter(website='autotrader.com', make=make,model=model).all().values())
             print(cars_data)
