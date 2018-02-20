@@ -49,6 +49,8 @@ class RetrieveAutoTraderResults(View):
             print(cars_data)
             if len(cars_data) !=0:
                 return JsonResponse({'res': 'success', 'cars_details':cars_data})
+            else:
+                return JsonResponse({'res':'error'})
 
         elif website == 'carsforsale.com':
             make, model, years = request.GET['make'], request.GET['model'], request.GET['year']
@@ -58,4 +60,6 @@ class RetrieveAutoTraderResults(View):
             print(len(cars_data))
             if len(cars_data) != 0:
                 return JsonResponse({'res': 'success', 'cars_details': cars_data})
+            else:
+                return JsonResponse({'res':'error'})
 

@@ -6,7 +6,11 @@
 {% endblock %}
 {% block content %}
     <div class="container" style="height:100%;padding-bottom:50px;background-color: white;" align="center">
-        <div class="row" style="padding-top: 100px;">
+
+        <div class="row" style="padding-top: 50px;">
+            <span class="col-md-12" id="data-error" style="color:red;text-align: center"></span>
+        </div>
+        <div class="row" style="padding-top: 50px;">
             <div class="card" style="border: 1px solid darkgray;width:80%;margin-left: 140px;">
                 <div class="card-header">
                     AutoTraders.com
@@ -192,6 +196,12 @@
                             //cars.innerHTML = response_data;
                             //cars_for_sale.innerHTML = response_data;
 
+                        }
+                        else if(data.res == 'error'){
+                            document.getElementById("data-error").innerHTML="AutoTraders.com: NO DATA FOUND!";
+                            setTimeout(function () {
+                                document.getElementById("data-error").innerHTML="";
+                            },5000);
                         }
                     }
 

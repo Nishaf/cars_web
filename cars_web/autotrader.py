@@ -10,11 +10,6 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from time import sleep
 
-#proxy = {'http': '51.15.35.239:3128', 'https': '51.15.35.239:3128'}
-proxy = {'http': '144.217.213.234:1080', 'https': '144.217.213.234:1080'}
-#proxy = {'http': '43.240.6.218:53281', 'https': '43.240.6.218:53281'}
-#proxy = {'http': '78.174.139.110:8080', 'https': '78.174.139.110:8080'}
-#proxy = {'http': '212.48.85.164:3128', 'https': '212.48.85.164:3128'}
 headers = {'User-agent': 'Mozilla/5.0'}
 
 
@@ -33,6 +28,8 @@ def get_auto_trader_data(make, model, min_year, max_year):
     url_changed = url + make + "/" + model + "/?startYear=" +min_year+ "&endYear=" + max_year + "&numRecords=100"
     print(url_changed)
     data = requests.get(url_changed, headers=headers)
+    print(data.status_code)
+    print(data.text)
     soup = BeautifulSoup(data.text)
     premium_listing = soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-premium'})
     listing = premium_listing + soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-featured'})
@@ -86,7 +83,7 @@ def get_carsforsale_data(make, model, years):
 
 
 #get_carsforsale_data('Acura','Integra', '1981')
-# get_auto_trader_data('Acura','Integra', '1981')
+get_auto_trader_data('Acura','Integra', '1981','2016')
 #get_cars_data(33583, 55767)
 #get_auto_trader_data()
 #get_cars_data()
