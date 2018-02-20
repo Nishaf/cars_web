@@ -15,20 +15,28 @@ class PopulateSelectingDatabase:
     def __init__(self):
         display = Display(visible=0, size=(1500,800))
         display.start()
-        chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument('--dns-prefetch-disable')
-        chrome_options.add_argument('--no-sandbox')
-        self.driver = webdriver.Chrome("/home/cars_web/chromedriver", chrome_options=chrome_options)
+        self.driver = webdriver.Chrome("/Users/nishafnaeem7/Downloads/chromedriver")#, chrome_options=self.get_chrome_options())
         self.autotrader = 'https://www.autotrader.com/'
         self.carsdotcom = 'https://www.cars.com/'
         self.carsforsale = 'https://www.carsforsale.com'
 
     def get_chrome_options(self):
-        PROXY = '51.15.35.239:3128'
+        PROXY = '144.217.213.234:1080'
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--proxy-server=%s' % PROXY)
         return chrome_options
 
+    def save_in_db(self, make, model):
+        for j in model:
+            print("Model: " + j.text.strip())
+            if CarModels.objects.filter(website='autotrader.com', make=make.text.strip(),
+                                        model=j.text.strip()).count() > 0:
+                sleep(0.2)
+                continue
+            else:
+                CarModels(website='autotrader.com', make=make.text.strip(), model=j.text.strip()).save()
+
+            print("Saved")
     def run_autotrader(self):
         self.driver.get(self.autotrader)
         print("URL LOADED....")
@@ -40,19 +48,21 @@ class PopulateSelectingDatabase:
             pass
         make = self.driver.find_element_by_xpath("//select[@name='makeCodeListPlaceHolder']")
         make.click()
-        for i in make.find_elements_by_xpath("//option")[1:-1]:
-            model_list = []
+        for i in make.find_elements_by_xpath("//option")[:-1]:
             print("Make: " + i.text.strip())
             i.click()
             sleep(2)
-            model = self.driver.find_elements_by_xpath("//select[@name='modelCodeListPlaceHolder']/option")
-            for j in model:
-                print("Model: " + j.text.strip())
-                if CarModels.objects.filter(website='autotrader.com', make=i.text.strip(), model=j.text.strip()).count() > 0:
-                    continue
-                else:
-                    CarModels(website='autotrader.com', make=i.text.strip(), model=j.text.strip()).save()
-                print("Saved")
+            model = self.driver.find_elements_by_xpath("//select[@name='modelCodeListPlaceHolder']//option")
+            print(len(model))
+            try:
+                self.save_in_db(i, model)
+            except:
+                print("Failed to get model list.. Retrying...")
+                sleep(2)
+                model = self.driver.find_elements_by_xpath("//select[@name='modelCodeListPlaceHolder']//option")
+                print(len(model))
+                self.save_in_db(i, model)
+
             sleep(2)
             make = self.driver.find_element_by_xpath("//select[@name='makeCodeListPlaceHolder']")
             make.click()
