@@ -10,7 +10,8 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from time import sleep
 
-headers = {'User-agent': 'Chrome/39.0.2171.95'}
+headers = {'User-agent': 'Chrome/39.0.2171.95'
+                         ''}
 
 
 def save_data(website, make, model, title, link):
@@ -83,7 +84,7 @@ def get_carsforsale_data(make, model, years):
 
 
 #get_carsforsale_data('Acura','Integra', '1981')
-get_auto_trader_data('Acura','Integra', '1981','2016')
+#get_auto_trader_data('Acura','Integra', '1981','2016')
 #get_cars_data(33583, 55767)
 #get_auto_trader_data()
 #get_cars_data()
