@@ -83,7 +83,7 @@ def get_carsforsale_data(make, model, years):
 
 
 #get_carsforsale_data('Acura','Integra', '1981')
-get_auto_trader_data('Acura','Integra', '1981','2016')
+#get_auto_trader_data('Acura','Integra', '1981','2016')
 #get_cars_data(33583, 55767)
 #get_auto_trader_data()
 #get_cars_data()
