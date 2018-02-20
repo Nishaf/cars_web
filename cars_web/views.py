@@ -3,8 +3,8 @@ from django.views.generic import View
 from .models import CarsDetails, CarModels
 from django.http import JsonResponse
 import re
-from autotrader import get_auto_trader_data, get_carsforsale_data
-from global_variables import auto_trader_years_list
+from .autotrader import get_auto_trader_data, get_carsforsale_data
+from .global_variables import auto_trader_years_list
 
 class Homepage(View):
     def get(self, request):
