@@ -27,27 +27,30 @@ def delete_previous_results(website, make, model):
 
 
 def get_auto_trader_data(make, model, min_year, max_year):
-    delete_previous_results('autotrader.com', make, model)
-    print('Retrieving Results....')
-    url = 'https://www.autotrader.com/cars-for-sale/'
-    url_changed = url + make + "/" + model + "/?startYear=" +min_year+ "&endYear=" + max_year + "&numRecords=100"
-    print(url_changed)
-    data = requests.get(url_changed, headers=headers, proxies=proxy)
-    print(data.status_code)
-    soup = BeautifulSoup(data.text)
-    premium_listing = soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-premium'})
-    listing = premium_listing + soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-featured'})
-    if soup.find('strong', attrs={'class': 'text-xlg text-normal'}) is not None:
-        print("No Data Found")
-        return
+    try:
+        delete_previous_results('autotrader.com', make, model)
+        print('Retrieving Results....')
+        url = 'https://www.autotrader.com/cars-for-sale/'
+        url_changed = url + make + "/" + model + "/?startYear=" +min_year+ "&endYear=" + max_year + "&numRecords=100"
+        print(url_changed)
+        data = requests.get(url_changed, headers=headers, proxies=proxy)
+        print(data.status_code)
+        soup = BeautifulSoup(data.text)
+        premium_listing = soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-premium'})
+        listing = premium_listing + soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-featured'})
+        if soup.find('strong', attrs={'class': 'text-xlg text-normal'}) is not None:
+            print("No Data Found")
+            return
 
-    for i in listing:
-        title_data = i.find('a', attrs={'class': 'text-md'})
-        title = title_data.text.strip()
-        link = "https://www.autotrader.com" + title_data.get('href')
-        print(title, link)
-        save_data('autotrader.com', make, model, title, link)
-
+        for i in listing:
+            title_data = i.find('a', attrs={'class': 'text-md'})
+            title = title_data.text.strip()
+            link = "https://www.autotrader.com" + title_data.get('href')
+            print(title, link)
+            save_data('autotrader.com', make, model, title, link)
+    except Exception as e:
+        print(e)
+        pass
 #get_auto_trader_data('Acura','Integra', '1981','2016')
 
 def get_cars_data(make_id, made_id):
