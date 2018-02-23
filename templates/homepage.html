@@ -4,6 +4,21 @@
 {% block text %}
     View HomePage
 {% endblock %}
+{% block style %}
+    <style>
+    .loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url("{% static 'img/loader.gif' %}") 50% 50% no-repeat rgb(249,249,249);
+    opacity: .8;
+        display: none;
+}
+    </style>
+{% endblock %}
 {% block content %}
     <div class="container" style="height:100%;padding-bottom:50px;background-color: white;" align="center">
 
@@ -110,6 +125,7 @@
     <script>
         var website_names = [];
 
+
          $(document).ready(function() {
                  $.ajaxSetup({cache: false}); // This part addresses an IE bug.  without it, IE will only load the first number and will never refresh
                  var my_refresh = setInterval(function () {
@@ -160,6 +176,7 @@
                 });
             }
             else if (website == 'autotrader.com'){
+                $(".loader").fadeIn("slow");
                 $.ajax({
                     type: "GET",
                     url: '/get/results/',
@@ -174,7 +191,9 @@
                     contentType: "application/json;charset=utf-8",
                     dataType: "json",
                     success: function(data) {
+                        $(".loader").fadeOut("slow");
                         if(data.res == 'success') {
+
                             var auto_trader_table = document.getElementById('auto_trader_table');
                             var currentdate = new Date();
                             var response_data = '<div align="center">Updated At: <strong>' + + currentdate.getHours() + ":" +
