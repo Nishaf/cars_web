@@ -3,7 +3,7 @@ from django.views.generic import View
 from .models import CarsDetails, CarModels
 from django.http import JsonResponse
 import re
-from .autotrader import get_auto_trader_data, get_carsforsale_data
+from .autotrader import get_auto_trader_data, get_carsforsale_data, send_email
 from .global_variables import auto_trader_years_list
 
 
@@ -39,16 +39,21 @@ class RetrieveAutoTraderResults(View):
         model = re.sub("[\(\[].*?[\)\]]", "", model)
         get_auto_trader_data(make, model, min_year, max_year)
         return make, model
+
     def get(self, request):
         website = request.GET['website']
         print(website)
         if website == 'autotrader.com':
             print('here')
             make, model = self.get_results(request)
-            cars_data = list(CarsDetails.objects.filter(website='autotrader.com', make=make,model=model).all().values())
+            cars_data = list(CarsDetails.objects.filter(website='autotrader.com', make=make,model=model).all()
+                             .values())
             print(cars_data)
-            if len(cars_data) !=0:
-                return JsonResponse({'res': 'success', 'cars_details':cars_data})
+            if len(cars_data) != 0:
+                email = request.GET.get('email')
+                if email:
+                    send_email(cars_data, email)
+                return JsonResponse({'res': 'success', 'cars_details': cars_data})
             else:
                 return JsonResponse({'res':'error'})
 

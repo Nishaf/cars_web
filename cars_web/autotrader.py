@@ -6,17 +6,18 @@ django.setup()
 import requests
 from bs4 import BeautifulSoup
 from cars_web.models import CarsDetails
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from time import sleep
+from django.utils.html import strip_tags
+from django.core.mail import EmailMultiAlternatives
+from cars_web.settings import EMAIL_HOST_USER
 
+
+p = 'https://admin123:admin123@8.29.123.111:27401'
 #proxy = {'http': '173.202.203.15:38990', 'https': '173.202.203.15:38990'}
-proxy = {'http': '191.252.120.235:3128', 'https': '191.252.120.235:3128'}
-#proxy = {'http': '71.49.153.49:13254', 'https': '71.49.153.49:13254'}
-#proxy = {'http': '78.174.139.110:8080', 'https': '78.174.139.110:8080'}
-#proxy = {'http': '212.48.85.164:3128', 'https': '212.48.85.164:3128'}
+#proxy = {'http': '191.252.120.235:3128', 'https': '191.252.120.235:3128'}
+#proxy = {'http': '199.195.253.124:3128', 'https': '199.195.253.124:3128'}
+#proxy = {'http': '160.16.149.50:8080', 'https': '160.16.149.50:8080'}
+proxy = {'https': p}
 headers = {'User-agent': 'Safari/537.36'}
-
 
 def save_data(website, make, model, title, link):
     CarsDetails(website=website,make=make, model=model, title=title, link=link).save()
@@ -26,6 +27,15 @@ def delete_previous_results(website, make, model):
         CarsDetails.objects.filter(website=website, make=make, model=model).all().delete()
 
 
+def send_email(items, email):
+    text_content = ""
+    for i in items:
+        text_content += i['link'] + '\n'
+    msg = EmailMultiAlternatives('Cars Listing', text_content, EMAIL_HOST_USER, [email])
+    # send_mail('Table',text_content,'nishafnaeem3@gmail.com',['nishafnaeem3@gmail.com'])
+    msg.send()
+
+
 def get_auto_trader_data(make, model, min_year, max_year):
     try:
         delete_previous_results('autotrader.com', make, model)
@@ -33,7 +43,7 @@ def get_auto_trader_data(make, model, min_year, max_year):
         url = 'https://www.autotrader.com/cars-for-sale/'
         url_changed = url + make + "/" + model + "/?startYear=" +min_year+ "&endYear=" + max_year + "&numRecords=100"
         print(url_changed)
-        data = requests.get(url_changed, headers=headers, proxies=proxy)
+        data = requests.get(url_changed, headers=headers, proxies=proxy, timeout=60)
         print(data.status_code)
         soup = BeautifulSoup(data.text)
         premium_listing = soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-premium'})
@@ -42,16 +52,28 @@ def get_auto_trader_data(make, model, min_year, max_year):
             print("No Data Found")
             return
 
+        newly_listed = []
+        for i,j in enumerate(listing):
+            new_var = j.find('p', attrs={'data-qaid':'cntnr-newly-listed'})
+            if new_var is not None:
+                newly_listed.append(listing.pop(i))
+                continue
+
+        for i in newly_listed:
+            title_data = i.find('a', attrs={'class': 'text-md'})
+            title = title_data.text.strip()
+            link = "https://www.autotrader.com" + title_data.get('href')
+            save_data('autotrader.com', make, model, title, link)
         for i in listing:
             title_data = i.find('a', attrs={'class': 'text-md'})
             title = title_data.text.strip()
             link = "https://www.autotrader.com" + title_data.get('href')
-            print(title, link)
             save_data('autotrader.com', make, model, title, link)
+
     except Exception as e:
         print(e)
         pass
-#get_auto_trader_data('Acura','Integra', '1981','2016')
+#get_auto_trader_data('Lexus','RX 330', '2004','2005')
 
 def get_cars_data(make_id, made_id):
     print(make_id, made_id)

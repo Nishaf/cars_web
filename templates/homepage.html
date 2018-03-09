@@ -31,7 +31,7 @@
                     AutoTraders.com
                 </div>
                 <div class="card-block">
-                    <div class="card-text row" style="padding: 30px 15px 10px 15px; height: 140px;">
+                    <div class="card-text row" style="padding: 30px 15px 10px 15px; height: 160px;">
                         <div class="col-md-3">
                             <span>Make</span>
                             <select id="auto_trader_make" style="width: 220px;">
@@ -63,8 +63,16 @@
                                 <option>Any Year</option>
                             </select>
                         </div>
-                        <div class="col-md-2" style="padding: 60px 0 80px 0;">
-                            <button class="btn btn-success" id="auto_trader_submit" onclick="call_func('autotrader.com')">Submit</button>
+                         <div class="col-md-6 row" style="padding-top: 20px;">
+                            <div class="col-md-3" style="padding-top: 6px;">
+                                <label style="float: right;">Email:</label>
+                            </div>
+                             <div class="col-md-4" style="float: left;">
+                                 <input class="form-control" type="email" id="email" name="email" placeholder="abc@gmail.com" style="width: 200px;">
+                             </div>
+                         </div>
+                        <div class="col-md-6" style="padding-top:20px;">
+                            <button style="float: right;" class="btn btn-success" id="auto_trader_submit" onclick="call_func('autotrader.com')">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -185,7 +193,8 @@
                         'model': $('#auto_trader_model').val(),
                         'min_year': $('#auto_trader_min_year').val(),
                         'max_year': $('#auto_trader_max_year').val(),
-                        'website': website
+                        'website': website,
+                        'email':  $('#email').val()
 
                     },
                     contentType: "application/json;charset=utf-8",
