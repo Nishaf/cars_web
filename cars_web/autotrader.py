@@ -14,8 +14,8 @@ from cars_web.settings import EMAIL_HOST_USER
 #proxy = {'http': '173.202.203.15:38990', 'https': '173.202.203.15:38990'}
 #proxy = {'http': '191.252.120.235:3128', 'https': '191.252.120.235:3128'}
 #proxy = {'http': '199.195.253.124:3128', 'https': '199.195.253.124:3128'}
-proxy = {'http': '160.16.149.50:8080', 'https': '160.16.149.50:8080'}
-
+#proxy = {'http': '160.16.149.50:8080', 'https': '160.16.149.50:8080'}
+#proxy = {'https': p}
 headers = {'User-agent': 'Safari/537.36'}
 
 def save_data(website, make, model, title, link):
@@ -42,7 +42,7 @@ def get_auto_trader_data(make, model, min_year, max_year):
         url = 'https://www.autotrader.com/cars-for-sale/'
         url_changed = url + make + "/" + model + "/?startYear=" +min_year+ "&endYear=" + max_year + "&numRecords=100"
         print(url_changed)
-        data = requests.get(url_changed, headers=headers, proxies=proxy, timeout=60)
+        data = requests.get(url_changed, headers=headers, timeout=60)
         print(data.status_code)
         soup = BeautifulSoup(data.text)
         premium_listing = soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-premium'})
@@ -149,3 +149,7 @@ sleep(10)
 driver.find_element_by_xpath("//button[@class='btn btn-primary btn-block']").click()
 sleep(10)
 '''
+
+
+
+
