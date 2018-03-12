@@ -15,11 +15,13 @@ from cars_web.settings import EMAIL_HOST_USER
 #proxy = {'http': '191.252.120.235:3128', 'https': '191.252.120.235:3128'}
 #proxy = {'http': '199.195.253.124:3128', 'https': '199.195.253.124:3128'}
 #proxy = {'http': '160.16.149.50:8080', 'https': '160.16.149.50:8080'}
-#proxy = {'https': p}
+
 headers = {'User-agent': 'Safari/537.36'}
 
+
 def save_data(website, make, model, title, link):
-    CarsDetails(website=website,make=make, model=model, title=title, link=link).save()
+    new_cars_data = []
+    cars, created =CarsDetails.objects.get_or_create(website=website, make=make, model=model, title=title, link=link)
 
 def delete_previous_results(website, make, model):
     if CarsDetails.objects.filter(website=website, make=make, model=model).count() > 0:
@@ -29,7 +31,7 @@ def delete_previous_results(website, make, model):
 def send_email(items, email):
     text_content = ""
     for i in items:
-        text_content += i['link'] + '\n'
+        text_content += "Title: %s\n Make: %s\n Model: %s\n Link: %s" % (i[0], i[1], [2], i[3])
     msg = EmailMultiAlternatives('Cars Listing', text_content, EMAIL_HOST_USER, [email])
     # send_mail('Table',text_content,'nishafnaeem3@gmail.com',['nishafnaeem3@gmail.com'])
     msg.send()
@@ -37,7 +39,6 @@ def send_email(items, email):
 
 def get_auto_trader_data(make, model, min_year, max_year):
     try:
-        delete_previous_results('autotrader.com', make, model)
         print('Retrieving Results....')
         url = 'https://www.autotrader.com/cars-for-sale/'
         url_changed = url + make + "/" + model + "/?startYear=" +min_year+ "&endYear=" + max_year + "&numRecords=100"
@@ -51,23 +52,28 @@ def get_auto_trader_data(make, model, min_year, max_year):
             print("No Data Found")
             return
 
-        newly_listed = []
-        for i,j in enumerate(listing):
+        newly_listed, new_cars = [], []
+        for i, j in enumerate(listing):
             new_var = j.find('p', attrs={'data-qaid':'cntnr-newly-listed'})
             if new_var is not None:
                 newly_listed.append(listing.pop(i))
                 continue
 
-        for i in newly_listed:
+        listing = newly_listed + listing
+        for i in listing:
             title_data = i.find('a', attrs={'class': 'text-md'})
             title = title_data.text.strip()
             link = "https://www.autotrader.com" + title_data.get('href')
-            save_data('autotrader.com', make, model, title, link)
+            if not CarsDetails.objects.filter(make=make, model=model, link=link, title=title).exists():
+                new_cars.append((title, make, model, link))
+        delete_previous_results('autotrader.com', make, model)
         for i in listing:
             title_data = i.find('a', attrs={'class': 'text-md'})
             title = title_data.text.strip()
             link = "https://www.autotrader.com" + title_data.get('href')
             save_data('autotrader.com', make, model, title, link)
+        return new_cars
+
 
     except Exception as e:
         print(e)

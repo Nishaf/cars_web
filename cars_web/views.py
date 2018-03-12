@@ -37,25 +37,26 @@ class RetrieveAutoTraderResults(View):
         model = request.GET['model']
         model = re.sub('\W+ ', '', model)
         model = re.sub("[\(\[].*?[\)\]]", "", model)
-        get_auto_trader_data(make, model, min_year, max_year)
-        return make, model
+        new_cars = get_auto_trader_data(make, model, min_year, max_year)
+        return make, model, new_cars
 
     def get(self, request):
         website = request.GET['website']
         print(website)
         if website == 'autotrader.com':
             print('here')
-            make, model = self.get_results(request)
+            make, model, new_cars = self.get_results(request)
             cars_data = list(CarsDetails.objects.filter(website='autotrader.com', make=make,model=model).all()
                              .values())
-            print(cars_data)
             if len(cars_data) != 0:
-                email = request.GET.get('email')
-                if email:
-                    send_email(cars_data, email)
+                if len(new_cars) != 0:
+                    email = request.GET.get('email')
+                    if email:
+                        print(email)
+                        send_email(new_cars, email)
                 return JsonResponse({'res': 'success', 'cars_details': cars_data})
             else:
-                return JsonResponse({'res':'error'})
+                return JsonResponse({'res': 'error'})
 
         elif website == 'carsforsale.com':
             make, model, years = request.GET['make'], request.GET['model'], request.GET['year']
