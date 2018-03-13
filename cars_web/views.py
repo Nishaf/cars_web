@@ -6,7 +6,6 @@ import re
 from .autotrader import get_auto_trader_data, get_carsforsale_data, send_email
 from .global_variables import auto_trader_years_list
 import threading
-
 class Homepage(View):
     def get(self, request):
         cars = CarModels.objects.all()
@@ -59,11 +58,7 @@ class RetrieveAutoTraderResults(View):
                     print(email)
                     if email:
                         print(email)
-                        #send_email(new_cars, email)
-                        with open('new_cars.txt', 'w') as f:
-                            for i in new_cars:
-                                f.writelines(i)
-                        f.close()
+                        send_email(new_cars, email)
 
                 return JsonResponse({'res': 'success', 'cars_details': cars_data})
             else:

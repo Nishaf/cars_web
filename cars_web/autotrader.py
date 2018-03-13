@@ -3,16 +3,14 @@ sys.path.append("/home/nishaf/PycharmProjects/Upwork_Projects")  # here store is
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cars_web.settings")
 django.setup()
 
-import requests
+import requests, random
 from bs4 import BeautifulSoup
 from cars_web.models import CarsDetails
 from django.utils.html import strip_tags
 from django.core.mail import EmailMultiAlternatives
 from cars_web.settings import EMAIL_HOST_USER
+from django.core.mail import send_mail
 
-
-p = 'https://admin123:admin123@8.29.123.111:27401'
-proxy = {'https': p}
 headers = {'User-agent': 'Safari/537.36'}
 
 
@@ -28,8 +26,11 @@ def send_email(items, email):
     text_content = ""
     for i in items:
         text_content += "Title: %s\n Make: %s\n Model: %s\n Link: %s" % (i[0], i[1], i[2], i[3])
-    msg = EmailMultiAlternatives('Cars Listing', text_content, EMAIL_HOST_USER, [email])
-    # send_mail('Table',text_content,'nishafnaeem3@gmail.com',['nishafnaeem3@gmail.com'])
+    if len(items) == 1:
+        msg = EmailMultiAlternatives("%s %s %s" % (items[0][0], items[0][1], items[0][2]),
+                                    text_content, EMAIL_HOST_USER, [email])
+    else:
+        msg = EmailMultiAlternatives("%s %s" % (items[0][0], items[0][1]), text_content, EMAIL_HOST_USER, [email])
     msg.send()
 
 
@@ -39,7 +40,7 @@ def get_auto_trader_data(make, model, min_year, max_year):
         url = 'https://www.autotrader.com/cars-for-sale/'
         url_changed = url + make + "/" + model + "/?startYear=" +min_year+ "&endYear=" + max_year + "&numRecords=100"
         print(url_changed)
-        data = requests.get(url_changed, headers=headers, proxies=proxy, timeout=60)
+        data = requests.get(url_changed, headers=headers, timeout=60)
         print(data.status_code)
         soup = BeautifulSoup(data.text)
         premium_listing = soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-premium'})
@@ -56,12 +57,13 @@ def get_auto_trader_data(make, model, min_year, max_year):
                 continue
 
         listing = newly_listed + listing
-        for i in listing:
-            title_data = i.find('a', attrs={'class': 'text-md'})
-            title = title_data.text.strip()
-            link = "https://www.autotrader.com" + title_data.get('href')
-            if not CarsDetails.objects.filter(make=make, model=model, link=link, title=title).exists():
-                new_cars.append((title, make, model, link))
+        if CarsDetails.objects.filter(make=make, model=model).count() > 0:
+            for i in listing:
+                title_data = i.find('a', attrs={'class': 'text-md'})
+                title = title_data.text.strip()
+                link = "https://www.autotrader.com" + title_data.get('href')
+                if not CarsDetails.objects.filter(make=make, model=model, link=link, title=title).exists():
+                    new_cars.append((title, make, model, link))
         delete_previous_results('autotrader.com', make, model)
         for i in listing:
             title_data = i.find('a', attrs={'class': 'text-md'})
