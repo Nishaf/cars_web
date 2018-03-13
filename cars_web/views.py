@@ -57,9 +57,9 @@ class RetrieveAutoTraderResults(View):
                 if len(new_cars) != 0:
                     email = request.GET.get('email')
                     print(email)
-                    #if email:
-                    #    print(email)
-                    #    send_email(new_cars, email)
+                    if email:
+                        print(email)
+                        send_email(new_cars, email)
                 return JsonResponse({'res': 'success', 'cars_details': cars_data})
             else:
                 return JsonResponse({'res': 'error'})
