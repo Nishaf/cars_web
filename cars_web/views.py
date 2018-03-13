@@ -61,7 +61,6 @@ class RetrieveAutoTraderResults(View):
                         print(email)
                         #send_email(new_cars, email)
                         with open('new_cars.txt', 'w') as f:
-                            new_cars = new_cars.split()
                             for i in new_cars:
                                 f.writelines(i)
                         f.close()
