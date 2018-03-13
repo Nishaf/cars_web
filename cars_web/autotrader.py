@@ -17,7 +17,7 @@ headers = {'User-agent': 'Safari/537.36'}
 
 
 def save_data(website, make, model, title, link):
-    cars, created =CarsDetails.objects.get_or_create(website=website, make=make, model=model, title=title, link=link)
+    CarsDetails.objects.create(website=website, make=make, model=model, title=title, link=link)
 
 def delete_previous_results(website, make, model):
     if CarsDetails.objects.filter(website=website, make=make, model=model).count() > 0:
@@ -26,7 +26,7 @@ def delete_previous_results(website, make, model):
 
 def send_email(items, email):
     text_content = ""
-    for i in items:.gitignore
+    for i in items:
         text_content += "Title: %s\n Make: %s\n Model: %s\n Link: %s" % (i[0], i[1], i[2], i[3])
     msg = EmailMultiAlternatives('Cars Listing', text_content, EMAIL_HOST_USER, [email])
     # send_mail('Table',text_content,'nishafnaeem3@gmail.com',['nishafnaeem3@gmail.com'])
@@ -50,7 +50,7 @@ def get_auto_trader_data(make, model, min_year, max_year):
 
         newly_listed, new_cars = [], []
         for i, j in enumerate(listing):
-            new_var = j.find('p', attrs={'data-qaid':'cntnr-newly-listed'})
+            new_var = j.find('p', attrs={'data-qaid': 'cntnr-newly-listed'})
             if new_var is not None:
                 newly_listed.append(listing.pop(i))
                 continue
@@ -69,7 +69,6 @@ def get_auto_trader_data(make, model, min_year, max_year):
             link = "https://www.autotrader.com" + title_data.get('href')
             save_data('autotrader.com', make, model, title, link)
         return new_cars
-
 
     except Exception as e:
         print(e)

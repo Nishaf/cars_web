@@ -59,7 +59,13 @@ class RetrieveAutoTraderResults(View):
                     print(email)
                     if email:
                         print(email)
-                        send_email(new_cars, email)
+                        #send_email(new_cars, email)
+                        with open('new_cars.txt', 'w') as f:
+                            new_cars = new_cars.split()
+                            for i in new_cars:
+                                f.writelines(i)
+                        f.close()
+
                 return JsonResponse({'res': 'success', 'cars_details': cars_data})
             else:
                 return JsonResponse({'res': 'error'})
