@@ -11,6 +11,8 @@ from django.core.mail import EmailMultiAlternatives
 from cars_web.settings import EMAIL_HOST_USER
 
 
+p = 'https://admin123:admin123@8.29.123.111:27401'
+proxy = {'https': p}
 headers = {'User-agent': 'Safari/537.36'}
 
 
@@ -24,7 +26,7 @@ def delete_previous_results(website, make, model):
 
 def send_email(items, email):
     text_content = ""
-    for i in items:
+    for i in items:.gitignore
         text_content += "Title: %s\n Make: %s\n Model: %s\n Link: %s" % (i[0], i[1], i[2], i[3])
     msg = EmailMultiAlternatives('Cars Listing', text_content, EMAIL_HOST_USER, [email])
     # send_mail('Table',text_content,'nishafnaeem3@gmail.com',['nishafnaeem3@gmail.com'])
@@ -37,7 +39,7 @@ def get_auto_trader_data(make, model, min_year, max_year):
         url = 'https://www.autotrader.com/cars-for-sale/'
         url_changed = url + make + "/" + model + "/?startYear=" +min_year+ "&endYear=" + max_year + "&numRecords=100"
         print(url_changed)
-        data = requests.get(url_changed, headers=headers, timeout=60)
+        data = requests.get(url_changed, headers=headers, proxies=proxy, timeout=60)
         print(data.status_code)
         soup = BeautifulSoup(data.text)
         premium_listing = soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-premium'})
