@@ -11,16 +11,10 @@ from django.core.mail import EmailMultiAlternatives
 from cars_web.settings import EMAIL_HOST_USER
 
 
-#proxy = {'http': '173.202.203.15:38990', 'https': '173.202.203.15:38990'}
-#proxy = {'http': '191.252.120.235:3128', 'https': '191.252.120.235:3128'}
-#proxy = {'http': '199.195.253.124:3128', 'https': '199.195.253.124:3128'}
-#proxy = {'http': '160.16.149.50:8080', 'https': '160.16.149.50:8080'}
-
 headers = {'User-agent': 'Safari/537.36'}
 
 
 def save_data(website, make, model, title, link):
-    new_cars_data = []
     cars, created =CarsDetails.objects.get_or_create(website=website, make=make, model=model, title=title, link=link)
 
 def delete_previous_results(website, make, model):

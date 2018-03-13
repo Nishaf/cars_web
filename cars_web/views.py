@@ -5,7 +5,7 @@ from django.http import JsonResponse
 import re
 from .autotrader import get_auto_trader_data, get_carsforsale_data, send_email
 from .global_variables import auto_trader_years_list
-
+import threading
 
 class Homepage(View):
     def get(self, request):
@@ -30,6 +30,7 @@ class GetModels(View):
 
 
 class RetrieveAutoTraderResults(View):
+    lock = threading.Lock()
     def get_results(self, request):
         min_year = request.GET['min_year']
         max_year = request.GET['max_year']
@@ -45,15 +46,20 @@ class RetrieveAutoTraderResults(View):
         print(website)
         if website == 'autotrader.com':
             print('here')
+            self.lock.acquire()
+            print("Working")
             make, model, new_cars = self.get_results(request)
             cars_data = list(CarsDetails.objects.filter(website='autotrader.com', make=make,model=model).all()
                              .values())
-            if len(cars_data) != 0:
+            self.lock.release()
+            if cars_data is not None and len(cars_data) != 0:
+                print("Length: " + str(len(new_cars)))
                 if len(new_cars) != 0:
                     email = request.GET.get('email')
-                    if email:
-                        print(email)
-                        send_email(new_cars, email)
+                    print(email)
+                    #if email:
+                    #    print(email)
+                    #    send_email(new_cars, email)
                 return JsonResponse({'res': 'success', 'cars_details': cars_data})
             else:
                 return JsonResponse({'res': 'error'})
