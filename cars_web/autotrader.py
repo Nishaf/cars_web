@@ -11,6 +11,7 @@ from django.core.mail import EmailMultiAlternatives
 from cars_web.settings import EMAIL_HOST_USER
 
 
+
 headers = {'User-agent': 'Safari/537.36'}
 
 
@@ -25,7 +26,7 @@ def delete_previous_results(website, make, model):
 def send_email(items, email):
     text_content = ""
     for i in items:
-        text_content += "Title: %s\n Make: %s\n Model: %s\n Link: %s" % (i[0], i[1], [2], i[3])
+        text_content += "Title: %s\n Make: %s\n Model: %s\n Link: %s" % (i[0], i[1], i[2], i[3])
     msg = EmailMultiAlternatives('Cars Listing', text_content, EMAIL_HOST_USER, [email])
     # send_mail('Table',text_content,'nishafnaeem3@gmail.com',['nishafnaeem3@gmail.com'])
     msg.send()
