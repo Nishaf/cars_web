@@ -91,7 +91,7 @@ def get_cars_data(make, model, min_year, max_year):
 
 def get_cars_dot_com_years(request):
     display = Display(visible=0, size=(800, 600))
-    driver = webdriver.Chrome(executable_path=BASE_DIR + "/chromedriver_linux")
+    driver = webdriver.Chrome()
     display.start()
     print('Hello')
     make, model = (request.GET.get('make')).strip(), (request.GET.get('model')).strip()
