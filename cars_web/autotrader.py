@@ -87,6 +87,7 @@ def get_cars_data(make, model, min_year, max_year):
             link = "https://www.cars.com/" + (item.find('a')).get('href')
             if not CarsDetails.objects.filter(make=make, model=model, link=link, title=title).exists():
                 new_cars.append((title, make, model, link))
+    delete_previous_results(website='cars.com', make=make, model=model)
     for item in listing:
         title_data = item.find('h2', attrs={'class': 'cui-delta listing-row__title'})
         title = title_data.text.strip()

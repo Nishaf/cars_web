@@ -81,7 +81,7 @@ class RetrieveAutoTraderResults(View):
             self.lock.acquire()
             print("Working")
             make, model, new_cars = self.get_cars_results(request)
-            cars_data = list(CarsDetails.objects.filter(website='cars.com', make=make,model=model).all()
+            cars_data = list(CarsDetails.objects.filter(website='cars.com', make=make, model=model).all()
                              .values())
             self.lock.release()
             print("CARS: " +str(len(cars_data)))
