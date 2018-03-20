@@ -105,14 +105,20 @@ def get_cars_dot_com_years(request):
     print(url1)
     driver.get(url1)
     print('DONE')
-    sleep(0.5)
     # zip = driver.find_element_by_xpath("//input[@name='zc']")
     # zip.click()
     # zip.clear()
-    more_filters = driver.find_element_by_xpath("//div[@class='toggle-show-more-filter  show-more']"
-                                                "//span[@class='toggle-show-more']")
-    print(more_filters.text)
-    more_filters.click()
+    try:
+        more_filters = driver.find_element_by_xpath("//div[@class='toggle-show-more-filter  show-more']"
+                                                    "//span[@class='toggle-show-more']")
+        print(more_filters.text)
+        more_filters.click()
+    except:
+        sleep(3)
+        more_filters = driver.find_element_by_xpath("//div[@class='toggle-show-more-filter  show-more']"
+                                                    "//span[@class='toggle-show-more']")
+        driver.execute_script("arguments[0].click();", more_filters)
+
     sleep(3)
     soup = BeautifulSoup(driver.page_source)
     years = soup.find_all('select', attrs={'name': 'yrId'})[0]
