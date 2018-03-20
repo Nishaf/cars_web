@@ -106,13 +106,10 @@ def get_cars_dot_com_years(request):
     driver.get(url1)
     print('DONE')
     sleep(2)
-    print(driver.current_url)
     # zip = driver.find_element_by_xpath("//input[@name='zc']")
     # zip.click()
     # zip.clear()
-    #driver.find_element_by_xpath("//span[@class='toggle-show-more']").click()
-
-    print(driver.page_source)
+    driver.find_element_by_xpath("//span[@class='toggle-show-more']").click()
     sleep(3)
     soup = BeautifulSoup(driver.page_source)
     years = soup.find_all('select', attrs={'name': 'yrId'})[0]
