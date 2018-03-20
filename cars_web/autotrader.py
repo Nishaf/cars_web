@@ -66,6 +66,7 @@ def get_cars_data(make, model, min_year, max_year):
 
     print(url1)
     print('Loading Data....')
+    data = requests.get(url1, headers=headers1, timeout=60)
     soup = BeautifulSoup(data.text)
     listings_list = soup.find('div', attrs={'id': 'srp-listing-rows-container'})
     listing = listings_list.find_all('div', attrs={'class': 'shop-srp-listings__listing'})
