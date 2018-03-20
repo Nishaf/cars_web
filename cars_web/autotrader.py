@@ -95,6 +95,7 @@ def get_cars_dot_com_years(request):
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--no-sandbox")
     driver = webdriver.Chrome(chrome_options=chrome_options)
+    driver.implicitly_wait(30)
     print('Hello')
     make, model = (request.GET.get('make')).strip(), (request.GET.get('model')).strip()
     car = CarModels.objects.filter(website='cars.com', make=make, model=model).first()
@@ -103,6 +104,7 @@ def get_cars_dot_com_years(request):
                                   'sort=listed-newest&zc=60606'
 
     driver.get(url1)
+
     zip = driver.find_element_by_xpath("//input[@name='zc']")
     zip.click()
     zip.clear()
