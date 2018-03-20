@@ -95,7 +95,7 @@ def get_cars_dot_com_years(request):
     display.start()
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--no-sandbox")
-    driver = webdriver.Chrome(BASE_DIR + "/chromedriver", chrome_options=chrome_options)
+    driver = webdriver.Chrome(chrome_options=chrome_options)
     driver.implicitly_wait(30)
     print('Hello')
     make, model = (request.GET.get('make')).strip(), (request.GET.get('model')).strip()
