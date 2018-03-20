@@ -84,6 +84,7 @@ class RetrieveAutoTraderResults(View):
             cars_data = list(CarsDetails.objects.filter(website='cars.com', make=make,model=model).all()
                              .values())
             self.lock.release()
+            print("CARS: " +str(len(cars_data)))
             if cars_data is not None and len(cars_data) != 0:
                 print("Length: " + str(len(new_cars)))
                 if len(new_cars) != 0:
