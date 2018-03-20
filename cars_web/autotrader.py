@@ -108,7 +108,6 @@ def get_cars_dot_com_years(request):
     try:
         more_filters = driver.find_element_by_xpath("//div[@class='toggle-show-more-filter  show-more']"
                                                     "//span[@class='toggle-show-more']")
-        print(more_filters.text)
         more_filters.click()
     except:
         sleep(2)
