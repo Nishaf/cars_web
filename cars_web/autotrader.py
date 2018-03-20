@@ -71,7 +71,7 @@ def get_cars_data(make, model, min_year, max_year):
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--no-sandbox")
     driver = webdriver.Chrome(chrome_options=chrome_options)
-    driver.implicitly_wait(30)
+    driver.implicitly_wait(20)
     driver.get(url1)
     #data = requests.get(url1, headers=headers1, timeout=60)
     soup = BeautifulSoup(driver.page_source)
