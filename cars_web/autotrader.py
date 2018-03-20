@@ -63,8 +63,9 @@ def get_cars_data(make, model, min_year, max_year):
            + str(car.model_value) + '&page=1&perPage=100' \
            '&rd=99999&sort=listed-newest&zc=60606&searchSource=GN_REFINEMENT&showMore=true&yrId=' + str(min_year) + '&yrId=' + str(max_year)
 
+    print(url1)
     print('Loading Data....')
-    data = requests.get(url1, headers=headers)
+    data = requests.get(url1, headers=headers, timeout=60)
     soup = BeautifulSoup(data.text)
     listings_list = soup.find('div', attrs={'id': 'srp-listing-rows-container'})
     listing = listings_list.find_all('div', attrs={'class': 'shop-srp-listings__listing'})
@@ -104,17 +105,13 @@ def get_cars_dot_com_years(request):
                                   'sort=listed-newest&zc=60606'
     print(url1)
     driver.get(url1)
-    print('DONE')
-    # zip = driver.find_element_by_xpath("//input[@name='zc']")
-    # zip.click()
-    # zip.clear()
     try:
         more_filters = driver.find_element_by_xpath("//div[@class='toggle-show-more-filter  show-more']"
                                                     "//span[@class='toggle-show-more']")
         print(more_filters.text)
         more_filters.click()
     except:
-        sleep(3)
+        sleep(2)
         more_filters = driver.find_element_by_xpath("//div[@class='toggle-show-more-filter  show-more']"
                                                     "//span[@class='toggle-show-more']")
         driver.execute_script("arguments[0].click();", more_filters)
