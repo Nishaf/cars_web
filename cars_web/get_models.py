@@ -9,13 +9,14 @@ from pyvirtualdisplay import Display
 from selenium.webdriver.common.keys import Keys
 from time import sleep
 from cars_web.models import CarModels
+import os
 
 
 class PopulateSelectingDatabase:
     def __init__(self):
         display = Display(visible=0, size=(1500,800))
         display.start()
-        self.driver = webdriver.Chrome("/usr/local/bin/chromedriver")#, chrome_options=self.get_chrome_options())
+        self.driver = webdriver.Chrome(os.getcwd() + "/chromedriver")#, chrome_options=self.get_chrome_options())
         self.autotrader = 'https://www.autotrader.com/'
         self.carsdotcom = 'https://www.cars.com/'
         self.carsforsale = 'https://www.carsforsale.com'
@@ -35,8 +36,8 @@ class PopulateSelectingDatabase:
                 continue
             else:
                 CarModels(website='autotrader.com', make=make.text.strip(), model=j.text.strip()).save()
-
             print("Saved")
+
     def run_autotrader(self):
         self.driver.get(self.autotrader)
         print("URL LOADED....")
@@ -70,21 +71,29 @@ class PopulateSelectingDatabase:
     def run_carsdotcom(self):
         self.driver.get(self.carsdotcom)
         print("URL LOADED....")
-        make = self.driver.find_element_by_xpath("//select[@name='mkId']")
+        make = self.driver.find_element_by_xpath("//select[@id='makeSelect']")
         make.click()
-        for i in make.find_elements_by_xpath("//option")[1:]:
+        sleep(3)
+        for i in make.find_elements_by_xpath("//select[@id='makeSelect']//option"):
             model_list = []
-            print("Make: " + i.text.strip())
+            print("Make: " + i.text.strip() + " ===> " + i.get_attribute('value'))
             i.click()
-            sleep(2)
-            model = self.driver.find_elements_by_xpath("//select[@name='mdId']/option")
+            sleep(3)
+            model = self.driver.find_elements_by_xpath("//select[@id='modelSelect']//option")
             for j in model:
-                print("Model: " + j.text.strip())
-                #CarModels(website='autotrader.com', make=i.text.strip(), model=j.text.strip()).save()
-                print("Saved")
+                if CarModels.objects.filter(website='cars.com', make=i.text.strip(), model=j.text.strip(),
+                                            make_value=i.get_attribute('value'),
+                                            model_value=j.get_attribute('value')).exists():
+                    print("Already Present")
+                    continue
+                else:
+                    CarModels(website='cars.com', make=i.text.strip(), model=j.text.strip(),
+                              make_value=i.get_attribute('value'), model_value=j.get_attribute('value')).save()
+                    print("Saved")
             sleep(2)
-            make = self.driver.find_element_by_xpath("//select[@name='mkId']")
+            make = self.driver.find_element_by_xpath("//select[@id='makeSelect']")
             make.click()
+            sleep(2)
 
     def run_carsforsale(self):
         while True:
@@ -140,4 +149,4 @@ class PopulateSelectingDatabase:
 
 
 #CarModels.objects.filter(website='carsforsale.com').all().delete()
-PopulateSelectingDatabase().run_autotrader()
+PopulateSelectingDatabase().run_carsdotcom()

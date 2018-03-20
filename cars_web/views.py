@@ -3,7 +3,7 @@ from django.views.generic import View
 from .models import CarsDetails, CarModels
 from django.http import JsonResponse
 import re
-from .autotrader import get_auto_trader_data, get_carsforsale_data, send_email
+from .autotrader import get_auto_trader_data, get_carsforsale_data, send_email, get_cars_data, get_cars_dot_com_years
 from .global_variables import auto_trader_years_list
 import threading
 class Homepage(View):
@@ -13,7 +13,6 @@ class Homepage(View):
         duplicate_list = []
         for car in cars:
             cars_list.add((car.website,car.make))
-
         cars_list = sorted(list(cars_list), key=lambda tup: tup[1])
         return render(request, 'homepage.html', {'cars': cars_list})
 
@@ -30,14 +29,24 @@ class GetModels(View):
 
 class RetrieveAutoTraderResults(View):
     lock = threading.Lock()
-    def get_results(self, request):
+
+    def extract_info(self, request):
         min_year = request.GET['min_year']
         max_year = request.GET['max_year']
         make = request.GET['make']
         model = request.GET['model']
+        return make, model, min_year, max_year
+
+    def get_auto_traders_results(self, request):
+        make, model, min_year, max_year = self.extract_info(request)
         model = re.sub('\W+ ', '', model)
         model = re.sub("[\(\[].*?[\)\]]", "", model)
         new_cars = get_auto_trader_data(make, model, min_year, max_year)
+        return make, model, new_cars
+
+    def get_cars_results(self, request):
+        make, model, min_year, max_year = self.extract_info(request)
+        new_cars = get_cars_data(make, model, min_year, max_year)
         return make, model, new_cars
 
     def get(self, request):
@@ -47,8 +56,32 @@ class RetrieveAutoTraderResults(View):
             print('here')
             self.lock.acquire()
             print("Working")
-            make, model, new_cars = self.get_results(request)
+            make, model, new_cars = self.get_auto_traders_results(request)
             cars_data = list(CarsDetails.objects.filter(website='autotrader.com', make=make,model=model).all()
+                             .values())
+            self.lock.release()
+            if cars_data is not None and len(cars_data) != 0:
+                print("Length: " + str(len(new_cars)))
+                if len(new_cars) != 0:
+                    email = request.GET.get('email')
+                    print(email)
+                    if email:
+                        print(email)
+                        send_email(new_cars, email)
+
+                return JsonResponse({'res': 'success', 'cars_details': cars_data})
+            else:
+                return JsonResponse({'res': 'error'})
+
+        elif website == 'cars.com':
+            if request.GET.get('years'):
+                years = get_cars_dot_com_years(request)
+                return JsonResponse({'res': 'success', 'years': years})
+            print('here')
+            self.lock.acquire()
+            print("Working")
+            make, model, new_cars = self.get_cars_results(request)
+            cars_data = list(CarsDetails.objects.filter(website='cars.com', make=make,model=model).all()
                              .values())
             self.lock.release()
             if cars_data is not None and len(cars_data) != 0:
@@ -74,4 +107,3 @@ class RetrieveAutoTraderResults(View):
                 return JsonResponse({'res': 'success', 'cars_details': cars_data})
             else:
                 return JsonResponse({'res':'error'})
-

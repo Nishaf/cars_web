@@ -3,19 +3,124 @@ sys.path.append("/home/nishaf/PycharmProjects/Upwork_Projects")  # here store is
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cars_web.settings")
 django.setup()
 
-import requests, random
+import requests
 from bs4 import BeautifulSoup
-from cars_web.models import CarsDetails
-from django.utils.html import strip_tags
+from cars_web.models import CarsDetails, CarModels
 from django.core.mail import EmailMultiAlternatives
-from cars_web.settings import EMAIL_HOST_USER
-from django.core.mail import send_mail
+from cars_web.settings import EMAIL_HOST_USER, BASE_DIR
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from time import sleep
+from pyvirtualdisplay import Display
 
-headers = {'User-agent': 'Safari/537.36'}
 
+p = 'https://admin123:admin123@8.29.123.111:27401'
+proxy = {'https': p}
+headers ={ 'Pragma': 'no-cache',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Language': 'en-US;q=0.9,en;q=0.8',
+            'Upgrade-Insecure-Requests': '1',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)'
+                          ' Chrome/63.0.3239.132 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+            'Save-Data': 'on'
+           }
+
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
+def get_desired_capabilities():
+    proxy = {'address': '8.29.123.111:27401',
+             'username': 'admin123',
+             'password': 'admin123'}
+
+    capabilities = dict(DesiredCapabilities.CHROME)
+    capabilities['proxy'] = {'proxyType': 'MANUAL',
+                             'httpProxy': proxy['address'],
+                             'ftpProxy': proxy['address'],
+                             'sslProxy': proxy['address'],
+                             'noProxy': '',
+                             'class': "org.openqa.selenium.Proxy",
+                             'autodetect': False}
+
+    capabilities['proxy']['socksUsername'] = proxy['username']
+    capabilities['proxy']['socksPassword'] = proxy['password']
+
+    return capabilities
+
+
+def get_chrome_options():
+    p = 'http://admin123:admin123@8.29.123.111:27401'
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument('--proxy-server=%s' % p)
+    return chrome_options
+
+
+def get_cars_data(make, model, min_year, max_year):
+    car = CarModels.objects.filter(website='cars.com', make=make, model=model).first()
+    url1 = 'https://www.cars.com/for-sale/searchresults.action/?mdId=' + str(car.make_value) + '&mkId=' \
+           + str(car.model_value) + '&page=1&perPage=100' \
+           '&rd=99999&sort=listed-newest&zc=60606&searchSource=GN_REFINEMENT&showMore=true&yrId=' + str(min_year) + '&yrId=' + str(max_year)
+
+    print('Loading Data....')
+    data = requests.get(url1, headers=headers)
+    soup = BeautifulSoup(data.text)
+    listings_list = soup.find('div', attrs={'id': 'srp-listing-rows-container'})
+    listing = listings_list.find_all('div', attrs={'class': 'shop-srp-listings__listing'})
+    print(len(listing))
+    new_cars = []
+    if CarsDetails.objects.filter(website='cars.com', make=make, model=model).count() > 0:
+        for item in listing:
+            title_data = item.find('h2', attrs={'class': 'cui-delta listing-row__title'})
+            title = title_data.text.strip()
+            link = "https://www.cars.com/" + (item.find('a')).get('href')
+            if not CarsDetails.objects.filter(make=make, model=model, link=link, title=title).exists():
+                new_cars.append((title, make, model, link))
+    for item in listing:
+        title_data = item.find('h2', attrs={'class': 'cui-delta listing-row__title'})
+        title = title_data.text.strip()
+        link = "https://www.cars.com/" + (item.find('a')).get('href')
+        save_data('cars.com', make, model, title, link)
+        print("Title: " + title)
+        print("Link: https://www.cars.com/" + link)
+        print("====================")
+
+    return new_cars
+
+
+def get_cars_dot_com_years(request, make, model):
+    display = Display(visible=0, size=(800, 600))
+    driver = webdriver.Chrome(executable_path=BASE_DIR + "/chromedriver")
+    display.start()
+    print('Hello')
+    #make, model = (request.GET.get('make')).strip(), (request.GET.get('model')).strip()
+    car = CarModels.objects.filter(website='cars.com', make=make, model=model).first()
+    url1 = 'https://www.cars.com/for-sale/searchresults.action/?mkId=' + str(car.make_value) + '&mdId=' + \
+           str(car.model_value) + '&page=1&perPage=100&rd=99999&searchSource=GN_REFINEMENT&showMore=true&' \
+                                  'sort=listed-newest&zc=60606'
+    '''&yrId=30031936&yrId=35797618'''
+    driver.get(url1)
+    zip = driver.find_element_by_xpath("//input[@name='zc']")
+    zip.click()
+    zip.clear()
+    driver.find_element_by_xpath("//span[@class='toggle-show-more']").click()
+    sleep(3)
+    soup = BeautifulSoup(driver.page_source)
+    years = soup.find_all('select', attrs={'name': 'yrId'})[0]
+    all_years = years.find_all('option')
+    years_list = []
+    for i in all_years:
+        years_list.append({'year': i.text, 'value': i.get('value')})
+
+    driver.close()
+    return years_list
+
+get_cars_dot_com_years('abc', 'Acura', 'RLX')
 
 def save_data(website, make, model, title, link):
     CarsDetails.objects.create(website=website, make=make, model=model, title=title, link=link)
+
 
 def delete_previous_results(website, make, model):
     if CarsDetails.objects.filter(website=website, make=make, model=model).count() > 0:
@@ -40,7 +145,7 @@ def get_auto_trader_data(make, model, min_year, max_year):
         url = 'https://www.autotrader.com/cars-for-sale/'
         url_changed = url + make + "/" + model + "/?startYear=" +min_year+ "&endYear=" + max_year + "&numRecords=100"
         print(url_changed)
-        data = requests.get(url_changed, headers=headers, timeout=60)
+        data = requests.get(url_changed, headers=headers, proxies=proxy, timeout=60)
         print(data.status_code)
         soup = BeautifulSoup(data.text)
         premium_listing = soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-premium'})
@@ -57,7 +162,7 @@ def get_auto_trader_data(make, model, min_year, max_year):
                 continue
 
         listing = newly_listed + listing
-        if CarsDetails.objects.filter(make=make, model=model).count() > 0:
+        if CarsDetails.objects.filter(website='autotrader.com', make=make, model=model).count() > 0:
             for i in listing:
                 title_data = i.find('a', attrs={'class': 'text-md'})
                 title = title_data.text.strip()
@@ -75,35 +180,38 @@ def get_auto_trader_data(make, model, min_year, max_year):
     except Exception as e:
         print(e)
         pass
-#get_auto_trader_data('Lexus','RX 330', '2004','2005')
 
-def get_cars_data(make_id, made_id):
-    print(make_id, made_id)
-    url1 = 'https://www.cars.com/for-sale/searchresults.action/?mdId=55767&mkId=33583&page=1&perPage=100' #'https://www.cars.com/for-sale/searchresults.action?mkId='+ str(make_id) + '&mdId='+str(made_id)+'&page=1&perPage=100&&zc='
-    print('Loading Data....')
-    data = requests.get(url1, headers=headers, proxies=proxy, verify=False)
-    soup = BeautifulSoup(data.text)
-    listing = soup.find_all('div', attrs={'class': 'shop-srp-listings__listing'})
-    print(len(listing))
-    for item in listing:
-        title_data = item.find('h2', attrs={'class': 'cui-delta listing-row__title'})
-        title = title_data.text.strip()
-        link =  "https://www.cars.com/" + (title_data.find('a')).get('href')
-        #save_data(title, link)
-        print("Title: " + title)
-        print("Link: https://www.cars.com/" +link)
-        print("====================")
 
-def get_carsforsale_data(make, model, years):
-    delete_previous_results('carsforsale.com', make, model)
-    url1 = 'https://www.carsforsale.com/Search?Make=' + str(make) +'&Model='+ str(model) +'&MinModelYear=' + str(years) + '&ZipCode=&Radius=100&PageNumber=1'
-    print('Loading Data....')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def get_carsforsale_data(make, model, min_year, max_year):
+    count = 0
+    #delete_previous_results('carsforsale.com', make, model)
+    # https://www.carsforsale.com/Search?Make=Toyota&Model=Camry&MinModelYear=2009&MaxModelYear=2012&PageNumber=4&
+    # OrderBy=Relevance&OrderDirection=Desc
+    url1 = 'https://www.carsforsale.com/Search?Make=' + str(make) + '&Model=' + str(model) + '&MinModelYear=' + str(min_year)\
+           + '&MaxModelYear=' + str(max_year) + '&ZipCode=&Radius=100&PageNumber=%s&OrderBy=Relevance&OrderDirection=Desc'
+
     print(url1)
-    data = requests.get(url1, headers=headers)
-    soup = BeautifulSoup(data.text)
-    #print(soup.prettify())
-
-    listing = soup.find_all('li', attrs={'class': 'vehicle-thumb col-xs-12 vehicle-list vehicle-results-snapshot'})
+    print('Loading Data....')
+    for i in range(1,5):
+        url = url1 % (str(i))
+        data = requests.get(url, headers=headers, timeout=60)
+        soup = BeautifulSoup(data.text)
+        listing = soup.find_all('li', attrs={'class': 'vehicle-thumb col-xs-12 vehicle-list vehicle-results-snapshot'})
 
     for item in listing:
         title = item.find('h4', attrs={'itemprop': 'name'}).text.strip()
@@ -114,7 +222,7 @@ def get_carsforsale_data(make, model, years):
         print("====================")
 
 
-#get_carsforsale_data('Acura','Integra', '1981')
+#get_carsforsale_data('Toyota','Camry', '2012', '12015')
 #get_cars_data(33583, 55767)
 #get_auto_trader_data()
 #get_cars_data()
