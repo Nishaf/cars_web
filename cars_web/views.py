@@ -86,9 +86,9 @@ class RetrieveAutoTraderResults(View):
             self.lock.release()
             print("CARS: " +str(len(cars_data)))
             if cars_data is not None and len(cars_data) != 0:
-                print("Length: " + str(len(new_cars)))
                 if len(new_cars) != 0:
-                    email = request.GET.get('email')
+                    print("Length: " + str(len(new_cars)))
+                    email = request.GET.get('cars_email')
                     print(email)
                     if email:
                         print(email)
