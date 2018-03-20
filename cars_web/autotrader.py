@@ -27,7 +27,8 @@ headers ={ 'Pragma': 'no-cache',
             'Connection': 'keep-alive',
             'Save-Data': 'on'
            }
-headers1 = {'User-Agent': 'Mozilla/5.0'}
+headers1 = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)'
+                          ' Chrome/63.0.3239.132 Safari/537.36'}
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 def get_desired_capabilities():
@@ -95,7 +96,7 @@ def get_cars_dot_com_years(request):
     display.start()
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--no-sandbox")
-    driver = webdriver.Chrome(chrome_options=chrome_options)
+    driver = webdriver.Chrome(BASE_DIR + "/chromedriver", chrome_options=chrome_options)
     driver.implicitly_wait(30)
     print('Hello')
     make, model = (request.GET.get('make')).strip(), (request.GET.get('model')).strip()
