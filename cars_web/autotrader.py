@@ -104,13 +104,15 @@ def get_cars_dot_com_years(request):
                                   'sort=listed-newest&zc=60606'
     print(url1)
     driver.get(url1)
-    print(driver.page_source)
     print('DONE')
     sleep(2)
+    print(driver.current_url)
     # zip = driver.find_element_by_xpath("//input[@name='zc']")
     # zip.click()
     # zip.clear()
-    driver.find_element_by_xpath("//span[@class='toggle-show-more']").click()
+    #driver.find_element_by_xpath("//span[@class='toggle-show-more']").click()
+
+    print(driver.page_source)
     sleep(3)
     soup = BeautifulSoup(driver.page_source)
     years = soup.find_all('select', attrs={'name': 'yrId'})[0]
