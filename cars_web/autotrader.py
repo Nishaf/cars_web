@@ -91,7 +91,6 @@ def get_cars_data(make, model, min_year, max_year):
 
 def get_cars_dot_com_years(request):
     display = Display(visible=0, size=(800, 600))
-
     display.start()
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--no-sandbox")
