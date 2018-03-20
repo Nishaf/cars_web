@@ -89,12 +89,12 @@ def get_cars_data(make, model, min_year, max_year):
     return new_cars
 
 
-def get_cars_dot_com_years(request, make, model):
+def get_cars_dot_com_years(request):
     display = Display(visible=0, size=(800, 600))
-    driver = webdriver.Chrome(executable_path=BASE_DIR + "/chromedriver")
+    driver = webdriver.Chrome(executable_path=BASE_DIR + "/chromedriver_linux")
     display.start()
     print('Hello')
-    #make, model = (request.GET.get('make')).strip(), (request.GET.get('model')).strip()
+    make, model = (request.GET.get('make')).strip(), (request.GET.get('model')).strip()
     car = CarModels.objects.filter(website='cars.com', make=make, model=model).first()
     url1 = 'https://www.cars.com/for-sale/searchresults.action/?mkId=' + str(car.make_value) + '&mdId=' + \
            str(car.model_value) + '&page=1&perPage=100&rd=99999&searchSource=GN_REFINEMENT&showMore=true&' \
@@ -116,7 +116,7 @@ def get_cars_dot_com_years(request, make, model):
     driver.close()
     return years_list
 
-get_cars_dot_com_years('abc', 'Acura', 'RLX')
+#get_cars_dot_com_years('abc', 'Acura', 'RLX')
 
 def save_data(website, make, model, title, link):
     CarsDetails.objects.create(website=website, make=make, model=model, title=title, link=link)
