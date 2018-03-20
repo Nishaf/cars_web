@@ -102,9 +102,9 @@ def get_cars_dot_com_years(request):
     url1 = 'https://www.cars.com/for-sale/searchresults.action/?mkId=' + str(car.make_value) + '&mdId=' + \
            str(car.model_value) + '&page=1&perPage=100&rd=99999&searchSource=GN_REFINEMENT&showMore=true&' \
                                   'sort=listed-newest&zc=60606'
-
+    print(url1)
     driver.get(url1)
-
+    sleep(2)
     zip = driver.find_element_by_xpath("//input[@name='zc']")
     zip.click()
     zip.clear()

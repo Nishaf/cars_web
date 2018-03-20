@@ -77,8 +77,8 @@
       <file leaf-file-name="autotrader.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cars_web/autotrader.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="106" column="0" lean-forward="true" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
+            <state relative-caret-position="260">
+              <caret line="104" column="14" lean-forward="false" selection-start-line="104" selection-start-column="14" selection-end-line="104" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -583,13 +583,6 @@
       <option name="presentableId" value="Default" />
       <updated>1516867353645</updated>
     </task>
-    <task id="LOCAL-00009" summary="Changed">
-      <created>1519053471328</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1519053471328</updated>
-    </task>
     <task id="LOCAL-00010" summary="Changed">
       <created>1519053613087</created>
       <option name="number" value="00010" />
@@ -926,7 +919,14 @@
       <option name="project" value="LOCAL" />
       <updated>1521549314823</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="chromedriver">
+      <created>1521549393140</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1521549393140</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1432,8 +1432,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cars_web/autotrader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="106" column="0" lean-forward="true" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
+        <state relative-caret-position="260">
+          <caret line="104" column="14" lean-forward="false" selection-start-line="104" selection-start-column="14" selection-end-line="104" selection-end-column="14" />
           <folding />
         </state>
       </provider>
