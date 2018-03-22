@@ -3,19 +3,21 @@ from django.views.generic import View
 from .models import CarsDetails, CarModels
 from django.http import JsonResponse
 import re
-from .autotrader import get_auto_trader_data, get_carsforsale_data, send_email, get_cars_data, get_cars_dot_com_years
+from .autotrader import get_auto_trader_data, get_carsforsale_data
+from cars_web.extra_functions import send_email
+from cars_web.cars import get_cars_data, get_cars_dot_com_years
 from .global_variables import auto_trader_years_list
 import threading
+
+
 class Homepage(View):
     def get(self, request):
         cars = CarModels.objects.all()
         cars_list = set()
-        duplicate_list = []
         for car in cars:
             cars_list.add((car.website,car.make))
         cars_list = sorted(list(cars_list), key=lambda tup: tup[1])
         return render(request, 'homepage.html', {'cars': cars_list})
-
 
 
 class GetModels(View):
@@ -85,8 +87,8 @@ class RetrieveAutoTraderResults(View):
                              .values())
             self.lock.release()
             print("CARS: " +str(len(cars_data)))
-            if cars_data is not None and len(cars_data) != 0:
-                if len(new_cars) != 0:
+            if cars_data and len(cars_data) != 0:
+                if new_cars and len(new_cars) != 0:
                     print("Length: " + str(len(new_cars)))
                     email = request.GET.get('cars_email')
                     print(email)
