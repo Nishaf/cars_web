@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9c5c53bd-f0e0-4237-b894-114ff5df938d" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/cars_web/cars.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/cars_web/extra_functions.py" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/cars_web/autotrader.py" afterPath="$PROJECT_DIR$/cars_web/autotrader.py" />
-      <change beforePath="$PROJECT_DIR$/cars_web/views.py" afterPath="$PROJECT_DIR$/cars_web/views.py" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change beforePath="$PROJECT_DIR$/templates/homepage.html" afterPath="$PROJECT_DIR$/templates/homepage.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -656,13 +650,6 @@
       <option name="presentableId" value="Default" />
       <updated>1516867353645</updated>
     </task>
-    <task id="LOCAL-00033" summary="chromedriver">
-      <created>1519154968277</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1519154968277</updated>
-    </task>
     <task id="LOCAL-00034" summary="chromedriver">
       <created>1519155324547</created>
       <option name="number" value="00034" />
@@ -999,7 +986,14 @@
       <option name="project" value="LOCAL" />
       <updated>1521560110686</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="Car Years Implemented.">
+      <created>1521696022215</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1521696022215</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1064,7 +1058,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Changed" />
     <MESSAGE value="chromedriver" />
-    <option name="LAST_COMMIT_MESSAGE" value="chromedriver" />
+    <MESSAGE value="Car Years Implemented." />
+    <option name="LAST_COMMIT_MESSAGE" value="Car Years Implemented." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
