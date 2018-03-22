@@ -42,8 +42,6 @@ def get_years(min_year, max_year):
     return years_list
 
 
-#get_years('2014', '2018')
-
 def get_cars_data(make, model, min_year, max_year):
     try:
         car = CarModels.objects.filter(website='cars.com', make=make, model=model).first()
@@ -61,7 +59,7 @@ def get_cars_data(make, model, min_year, max_year):
         display.start()
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--no-sandbox")
-        driver = webdriver.Chrome(BASE_DIR + '/chromedriver', chrome_options=chrome_options)
+        driver = webdriver.Chrome(chrome_options=chrome_options)
         driver.implicitly_wait(20)
         driver.get(url1)
         #data = requests.get(url1, headers=headers1, timeout=60)
@@ -100,7 +98,7 @@ def get_cars_dot_com_years(request):
     display.start()
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--no-sandbox")
-    driver = webdriver.Chrome(BASE_DIR + '/chromedriver', chrome_options=chrome_options)
+    driver = webdriver.Chrome(chrome_options=chrome_options)
     driver.implicitly_wait(30)
     print('Hello')
     make, model = (request.GET.get('make')).strip(), (request.GET.get('model')).strip()
