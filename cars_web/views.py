@@ -88,6 +88,7 @@ class RetrieveAutoTraderResults(View):
             self.lock.release()
             print("CARS: " +str(len(cars_data)))
             if cars_data and len(cars_data) != 0:
+
                 if new_cars and len(new_cars) != 0:
                     print("Length: " + str(len(new_cars)))
                     email = request.GET.get('cars_email')

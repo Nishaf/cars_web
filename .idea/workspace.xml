@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="9c5c53bd-f0e0-4237-b894-114ff5df938d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/cars_web/cars.py" afterPath="$PROJECT_DIR$/cars_web/cars.py" />
+      <change beforePath="$PROJECT_DIR$/cars_web/views.py" afterPath="$PROJECT_DIR$/cars_web/views.py" />
+      <change beforePath="$PROJECT_DIR$/templates/homepage.html" afterPath="$PROJECT_DIR$/templates/homepage.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,8 +32,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cars_web/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="89" column="24" lean-forward="false" selection-start-line="89" selection-start-column="24" selection-end-line="89" selection-end-column="24" />
+            <state relative-caret-position="281">
+              <caret line="94" column="0" lean-forward="false" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -61,15 +64,15 @@
       <file leaf-file-name="homepage.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/homepage.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="560">
-              <caret line="164" column="39" lean-forward="false" selection-start-line="164" selection-start-column="39" selection-end-line="164" selection-end-column="39" />
+            <state relative-caret-position="125">
+              <caret line="177" column="30" lean-forward="false" selection-start-line="177" selection-start-column="30" selection-end-line="177" selection-end-column="30" />
               <folding>
                 <element signature="e#636#672#0#HTML" expanded="true" />
                 <element signature="e#5650#5676#0#HTML" expanded="true" />
                 <element signature="e#5794#5815#0#HTML" expanded="true" />
-                <marker date="1521646950130" expanded="false" signature="5735:5752" ph="..." />
-                <marker date="1521646950130" expanded="false" signature="5924:5936" ph="..." />
-                <marker date="1521646950130" expanded="false" signature="6082:6095" ph="..." />
+                <marker date="1521698137256" expanded="false" signature="5735:5752" ph="..." />
+                <marker date="1521698137256" expanded="false" signature="5924:5936" ph="..." />
+                <marker date="1521698137256" expanded="false" signature="6082:6095" ph="..." />
               </folding>
             </state>
           </provider>
@@ -78,8 +81,8 @@
       <file leaf-file-name="autotrader.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cars_web/autotrader.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-685">
-              <caret line="15" column="40" lean-forward="false" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
+            <state relative-caret-position="345">
+              <caret line="31" column="31" lean-forward="false" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -100,8 +103,8 @@
       <file leaf-file-name="cars.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cars_web/cars.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="254">
-              <caret line="91" column="25" lean-forward="false" selection-start-line="91" selection-start-column="25" selection-end-line="91" selection-end-column="25" />
+            <state relative-caret-position="-297">
+              <caret line="48" column="2" lean-forward="false" selection-start-line="48" selection-start-column="2" selection-end-line="48" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -120,7 +123,7 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cars_web/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
+            <state relative-caret-position="420">
               <caret line="32" column="23" lean-forward="false" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
               <folding />
             </state>
@@ -173,10 +176,10 @@
         <option value="$PROJECT_DIR$/cars_web/urls.py" />
         <option value="$PROJECT_DIR$/cars_web/carsforsale.com.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/cars_web/autotrader.py" />
         <option value="$PROJECT_DIR$/cars_web/extra_functions.py" />
-        <option value="$PROJECT_DIR$/templates/homepage.html" />
+        <option value="$PROJECT_DIR$/cars_web/autotrader.py" />
         <option value="$PROJECT_DIR$/cars_web/cars.py" />
+        <option value="$PROJECT_DIR$/templates/homepage.html" />
         <option value="$PROJECT_DIR$/cars_web/views.py" />
       </list>
     </option>
@@ -650,13 +653,6 @@
       <option name="presentableId" value="Default" />
       <updated>1516867353645</updated>
     </task>
-    <task id="LOCAL-00034" summary="chromedriver">
-      <created>1519155324547</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1519155324547</updated>
-    </task>
     <task id="LOCAL-00035" summary="chromedriver">
       <created>1519155336734</created>
       <option name="number" value="00035" />
@@ -993,7 +989,14 @@
       <option name="project" value="LOCAL" />
       <updated>1521696022215</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="Car Years Implemented.">
+      <created>1521696781127</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1521696781127</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1066,7 +1069,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/cars_web/autotrader.py</url>
-          <line>64</line>
+          <line>63</line>
           <option name="timeStamp" value="97" />
         </line-breakpoint>
       </breakpoints>
@@ -1077,7 +1080,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="114" />
+      <option name="time" value="118" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1097,9 +1100,9 @@
             <element signature="e#636#672#0#HTML" expanded="true" />
             <element signature="e#5650#5676#0#HTML" expanded="true" />
             <element signature="e#5794#5815#0#HTML" expanded="true" />
-            <marker date="1521646950130" expanded="false" signature="5735:5752" ph="..." />
-            <marker date="1521646950130" expanded="false" signature="5924:5936" ph="..." />
-            <marker date="1521646950130" expanded="false" signature="6082:6095" ph="..." />
+            <marker date="1521698137256" expanded="false" signature="5735:5752" ph="..." />
+            <marker date="1521698137256" expanded="false" signature="5924:5936" ph="..." />
+            <marker date="1521698137256" expanded="false" signature="6082:6095" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1175,9 +1178,9 @@
             <element signature="e#636#672#0#HTML" expanded="true" />
             <element signature="e#5650#5676#0#HTML" expanded="true" />
             <element signature="e#5794#5815#0#HTML" expanded="true" />
-            <marker date="1521646950130" expanded="false" signature="5735:5752" ph="..." />
-            <marker date="1521646950130" expanded="false" signature="5924:5936" ph="..." />
-            <marker date="1521646950130" expanded="false" signature="6082:6095" ph="..." />
+            <marker date="1521698137256" expanded="false" signature="5735:5752" ph="..." />
+            <marker date="1521698137256" expanded="false" signature="5924:5936" ph="..." />
+            <marker date="1521698137256" expanded="false" signature="6082:6095" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1276,9 +1279,9 @@
             <element signature="e#636#672#0#HTML" expanded="true" />
             <element signature="e#5650#5676#0#HTML" expanded="true" />
             <element signature="e#5794#5815#0#HTML" expanded="true" />
-            <marker date="1521646950130" expanded="false" signature="5735:5752" ph="..." />
-            <marker date="1521646950130" expanded="false" signature="5924:5936" ph="..." />
-            <marker date="1521646950130" expanded="false" signature="6082:6095" ph="..." />
+            <marker date="1521698137256" expanded="false" signature="5735:5752" ph="..." />
+            <marker date="1521698137256" expanded="false" signature="5924:5936" ph="..." />
+            <marker date="1521698137256" expanded="false" signature="6082:6095" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1376,14 +1379,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cars_web/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="23" lean-forward="false" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cars_web/get_models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="258">
@@ -1425,14 +1420,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cars_web/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="28" lean-forward="false" selection-start-line="0" selection-start-column="28" selection-end-line="0" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -1441,18 +1428,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/django/views/generic/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="67" column="0" lean-forward="false" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/_strptime.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="364" column="0" lean-forward="false" selection-start-line="364" selection-start-column="0" selection-end-line="364" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cars_web/autotrader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="31" column="31" lean-forward="false" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cars_web/cars.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-297">
+          <caret line="48" column="2" lean-forward="false" selection-start-line="48" selection-start-column="2" selection-end-line="48" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cars_web/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="28" lean-forward="false" selection-start-line="0" selection-start-column="28" selection-end-line="0" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cars_web/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="32" column="23" lean-forward="false" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
           <folding />
         </state>
       </provider>
@@ -1467,41 +1478,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/django/views/generic/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/homepage.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="164" column="39" lean-forward="false" selection-start-line="164" selection-start-column="39" selection-end-line="164" selection-end-column="39" />
+        <state relative-caret-position="125">
+          <caret line="177" column="30" lean-forward="false" selection-start-line="177" selection-start-column="30" selection-end-line="177" selection-end-column="30" />
           <folding>
             <element signature="e#636#672#0#HTML" expanded="true" />
             <element signature="e#5650#5676#0#HTML" expanded="true" />
             <element signature="e#5794#5815#0#HTML" expanded="true" />
-            <marker date="1521646950130" expanded="false" signature="5735:5752" ph="..." />
-            <marker date="1521646950130" expanded="false" signature="5924:5936" ph="..." />
-            <marker date="1521646950130" expanded="false" signature="6082:6095" ph="..." />
+            <marker date="1521698137256" expanded="false" signature="5735:5752" ph="..." />
+            <marker date="1521698137256" expanded="false" signature="5924:5936" ph="..." />
+            <marker date="1521698137256" expanded="false" signature="6082:6095" ph="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cars_web/autotrader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-685">
-          <caret line="15" column="40" lean-forward="false" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cars_web/cars.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="91" column="25" lean-forward="false" selection-start-line="91" selection-start-column="25" selection-end-line="91" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cars_web/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="89" column="24" lean-forward="false" selection-start-line="89" selection-start-column="24" selection-end-line="89" selection-end-column="24" />
+        <state relative-caret-position="281">
+          <caret line="94" column="0" lean-forward="false" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
