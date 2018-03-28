@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from cars_web.settings import BASE_DIR
 from cars_web.models import CarModels
 
+
 def get_chrome_options():
     p = 'https://admin123:admin123@8.29.123.111:27401'
     chrome_options = webdriver.ChromeOptions()

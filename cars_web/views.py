@@ -3,7 +3,7 @@ from django.views.generic import View
 from .models import CarsDetails, CarModels
 from django.http import JsonResponse
 import re
-from .autotrader import get_auto_trader_data, get_carsforsale_data
+from .autotrader import get_auto_trader_data
 from cars_web.extra_functions import send_email
 from cars_web.cars import get_cars_data, get_cars_dot_com_years
 from .global_variables import auto_trader_years_list
@@ -86,9 +86,9 @@ class RetrieveAutoTraderResults(View):
             cars_data = list(CarsDetails.objects.filter(website='cars.com', make=make, model=model).all()
                              .values())
             self.lock.release()
-            print("CARS: " +str(len(cars_data)))
-            if cars_data and len(cars_data) != 0:
 
+            print("CARS: " +str(len(cars_data)))
+            if cars_data and len(cars_data) != 0 and new_cars != "Exception":
                 if new_cars and len(new_cars) != 0:
                     print("Length: " + str(len(new_cars)))
                     email = request.GET.get('cars_email')
@@ -98,13 +98,14 @@ class RetrieveAutoTraderResults(View):
                         send_email(new_cars, email)
 
                 return JsonResponse({'res': 'success', 'cars_details': cars_data})
+
             else:
                 return JsonResponse({'res': 'error'})
 
         elif website == 'carsforsale.com':
             make, model, years = request.GET['make'], request.GET['model'], request.GET['year']
             print(make, model, years)
-            get_carsforsale_data(make, model, years)
+            #get_carsforsale_data(make, model, years)
             cars_data = list(CarsDetails.objects.filter(website='carsforsale.com', make=make, model=model).all().values())
             print(len(cars_data))
             if len(cars_data) != 0:

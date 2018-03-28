@@ -127,6 +127,61 @@
                              </div>
                          </div>
                         <div class="col-md-6" style="padding-top: 20px;">
+                            <button  style="float: right;"  class="btn btn-success" id="cars_submit" onclick="call_func('cars.com', true)">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-top: 30px;">
+            <div class="card" style="border: 1px solid darkgray;width:80%;margin-left: 140px;">
+                <div class="card-header">
+                    CarsforSale.com
+                </div>
+                <div class="card-block">
+                    <div class="card-text row" style="padding: 30px 15px 10px 15px; height: 160px;">
+                        <div class="col-md-3">
+
+                            <span>Make</span>
+                            <select id="carsforsale_make" style="width: 220px;">
+                                {% if cars %}
+                                    {% for car in cars %}
+                                        {% if car.0 == 'carsforsale.com' %}
+                                            <option>{{ car.1 }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
+
+                        </div>
+                        <div class="col-md-3">
+
+                            <span>Model</span>
+                            <select id="carsforsale_model" style="width: 220px;">
+                                <option>Any Model</option>
+                            </select>
+                        </div>
+                       <div class="col-md-2" align="right">
+                            <span>Min Year</span>
+                            <select id="carsforsale_min_year" style="width: 180px;">
+                                <option>Any Year</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" align="right" style="padding-left: 60px;">
+                            <span>Max Year</span>
+                            <select id="carsforsale_max_year" style="width: 180px;">
+                                <option>Any Year</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 row" style="padding-top: 20px;">
+                            <div class="col-md-3" style="padding-top: 6px;">
+                                <label style="float: right;">Email:</label>
+                            </div>
+                             <div class="col-md-4" style="float: left;">
+                                 <input class="form-control" type="email" id="carsforsale_email" name="carsforsale_email" placeholder="abc@gmail.com" style="width: 200px;">
+                             </div>
+                         </div>
+                        <div class="col-md-6" style="padding-top: 20px;">
                             <button  style="float: right;"  class="btn btn-success" id="carsforsale_submit" onclick="call_func('cars.com', true)">Submit</button>
                         </div>
                     </div>
@@ -134,6 +189,7 @@
             </div>
         </div>
     </div>
+
     <div style="padding: 50px;">
         <div class="col-md-12 row" style="padding-top: 30px;">
             <!--<div class="bg-dark" style="height: 40px;color: white;width:100%; font-size: 20px;" align="left">
@@ -205,6 +261,12 @@
                         }
                         else if(data.res == 'error'){
                             document.getElementById("data-error").innerHTML="Cars.com: NO DATA FOUND!";
+                            document.getElementById('cars_table').innerHTML='';
+                            var index = website_names.indexOf("cars.com");
+                            if (index > -1){
+                                website_names.splice(index, 1);
+                            }
+                            alert(website_names);
                             setTimeout(function () {
                                 document.getElementById("data-error").innerHTML="";
                             }, 15000);
@@ -260,6 +322,13 @@
                         }
                         else if(data.res == 'error'){
                             document.getElementById("data-error").innerHTML="AutoTraders.com: NO DATA FOUND!";
+                            document.getElementById('auto_trader_table').innerHTML='';
+                            website_names.pop("autotrader.com");
+                            var index = website_names.indexOf("autotrader.com");
+                            if (index > -1){
+                                website_names.splice(index, 1);
+                            }
+                            alert(website_names);
                             setTimeout(function () {
                                 document.getElementById("data-error").innerHTML="";
                             },15000);
@@ -328,6 +397,9 @@
         });
          $(document).ready(function(){
             $("#cars_model").change(function(){
+                if (!$('.loader').is(':visible')) {
+                    $(".loader").fadeIn("slow");
+                }
                 $.ajax({
                     type: "GET",
                     url: '/get/results/',
@@ -340,6 +412,9 @@
                     contentType: "application/json;charset=utf-8",
                     dataType: "json",
                     success: function(data) {
+                        if ($('.loader').is(':visible')) {
+                            $(".loader").fadeOut("slow");
+                        }
                         if(data.res == 'success') {
                             var cars_min_years = document.getElementById('cars_min_year');
                             var cars_max_years = document.getElementById('cars_max_year');

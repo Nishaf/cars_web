@@ -21,26 +21,28 @@ def in_dictlist(pair, my_dictlist):
 
 
 def get_years(min_year, max_year):
-    years_list = []
-    min_date = datetime.datetime.strptime(min_year, '%Y')
-    max_date = datetime.datetime.strptime(max_year, '%Y')
-    if max_date>min_date:
-        years_range = relativedelta(max_date, min_date).years
-        for i in range(0, years_range + 1):
-            date = min_date + datetime.timedelta(366 * i)
-            year = in_dictlist(('year', str(date.year)), cars_years_list)
-            if year:
-                years_list.append(year)
-    else:
-        years_range = relativedelta(min_date, max_date).years
-        for i in range(0, years_range + 1):
-            date = max_date + datetime.timedelta(366 * i)
-            year = in_dictlist(('year', str(date.year)), cars_years_list)
-            if year:
-                years_list.append(year.strip())
+    try:
+        years_list = []
+        min_date = datetime.datetime.strptime(min_year, '%Y')
+        max_date = datetime.datetime.strptime(max_year, '%Y')
+        if max_date>min_date:
+            years_range = relativedelta(max_date, min_date).years
+            for i in range(0, years_range + 1):
+                date = min_date + datetime.timedelta(366 * i)
+                year = in_dictlist(('year', str(date.year)), cars_years_list)
+                if year:
+                    years_list.append(year)
+        else:
+            years_range = relativedelta(min_date, max_date).years
+            for i in range(0, years_range + 1):
+                date = max_date + datetime.timedelta(366 * i)
+                year = in_dictlist(('year', str(date.year)), cars_years_list)
+                if year:
+                    years_list.append(year.strip())
 
-    return years_list
-
+        return years_list
+    except:
+        return []
 
 def get_cars_data(make, model, min_year, max_year):
     try:
@@ -48,7 +50,7 @@ def get_cars_data(make, model, min_year, max_year):
         years = get_years(min_year, max_year)
         url1 = 'https://www.cars.com/for-sale/searchresults.action/?mdId=' + str(car.make_value) + '&mkId=' \
                + str(car.model_value) + '&page=1&perPage=100' \
-               '&rd=99999&sort=listed-newest&zc=60606&searchSource=GN_REFINEMENT&showMore=true'
+               '&rd=99999&sort=listed-newest&zc=75229&searchSource=GN_REFINEMENT&showMore=true'
                                         #'&yrId=' + str(min_year) + '&yrId=' + str(max_year)
         for i in years:
             url1 += '&yrId=' + str(i)
@@ -59,7 +61,7 @@ def get_cars_data(make, model, min_year, max_year):
         display.start()
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--no-sandbox")
-        driver = webdriver.Chrome(chrome_options=chrome_options)
+        driver = webdriver.Chrome(BASE_DIR + "/chromedriver", chrome_options=chrome_options)
         driver.implicitly_wait(20)
         driver.get(url1)
         #data = requests.get(url1, headers=headers1, timeout=60)
@@ -89,42 +91,47 @@ def get_cars_data(make, model, min_year, max_year):
         return new_cars
     except Exception as e:
         print(e)
-        pass
+        return "Exception"
+
 
 #get_cars_data('Acura', 'RLX', '2014', '2018')
 
+
 def get_cars_dot_com_years(request):
-    display = Display(visible=0, size=(800, 600))
-    display.start()
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument("--no-sandbox")
-    driver = webdriver.Chrome(chrome_options=chrome_options)
-    driver.implicitly_wait(30)
-    print('Hello')
-    make, model = (request.GET.get('make')).strip(), (request.GET.get('model')).strip()
-    car = CarModels.objects.filter(website='cars.com', make=make, model=model).first()
-    url1 = 'https://www.cars.com/for-sale/searchresults.action/?mkId=' + str(car.make_value) + '&mdId=' + \
-           str(car.model_value) + '&page=1&perPage=100&rd=99999&searchSource=GN_REFINEMENT&showMore=true&' \
-                                  'sort=listed-newest&zc=60606'
-    print(url1)
-    driver.get(url1)
     try:
-        more_filters = driver.find_element_by_xpath("//div[@class='toggle-show-more-filter  show-more']"
-                                                    "//span[@class='toggle-show-more']")
-        more_filters.click()
+        display = Display(visible=0, size=(800, 600))
+        display.start()
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument("--no-sandbox")
+        driver = webdriver.Chrome(BASE_DIR + "/chromedriver", chrome_options=chrome_options)
+        driver.implicitly_wait(30)
+        print('Hello')
+        make, model = (request.GET.get('make')).strip(), (request.GET.get('model')).strip()
+        car = CarModels.objects.filter(website='cars.com', make=make, model=model).first()
+        url1 = 'https://www.cars.com/for-sale/searchresults.action/?mkId=' + str(car.make_value) + '&mdId=' + \
+               str(car.model_value) + '&page=1&perPage=100&rd=99999&searchSource=GN_REFINEMENT&showMore=true&' \
+                                      'sort=listed-newest&zc=75229'
+        print(url1)
+        driver.get(url1)
+        try:
+            more_filters = driver.find_element_by_xpath("//div[@class='toggle-show-more-filter  show-more']"
+                                                        "//span[@class='toggle-show-more']")
+            more_filters.click()
+        except:
+            sleep(2)
+            more_filters = driver.find_element_by_xpath("//div[@class='toggle-show-more-filter  show-more']"
+                                                        "//span[@class='toggle-show-more']")
+            driver.execute_script("arguments[0].click();", more_filters)
+
+        sleep(3)
+        soup = BeautifulSoup(driver.page_source)
+        years = soup.find_all('select', attrs={'name': 'yrId'})[0]
+        all_years = years.find_all('option')
+        years_list = []
+        for i in all_years:
+            years_list.append({'year': i.text, 'value': i.get('value')})
+
+        driver.close()
+        return years_list
     except:
-        sleep(2)
-        more_filters = driver.find_element_by_xpath("//div[@class='toggle-show-more-filter  show-more']"
-                                                    "//span[@class='toggle-show-more']")
-        driver.execute_script("arguments[0].click();", more_filters)
-
-    sleep(3)
-    soup = BeautifulSoup(driver.page_source)
-    years = soup.find_all('select', attrs={'name': 'yrId'})[0]
-    all_years = years.find_all('option')
-    years_list = []
-    for i in all_years:
-        years_list.append({'year': i.text, 'value': i.get('value')})
-
-    driver.close()
-    return years_list
+        return None
