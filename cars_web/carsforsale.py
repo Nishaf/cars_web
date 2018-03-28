@@ -169,7 +169,7 @@ def get_carsforsale_data1(make, model, min_year, max_year):
 
 while True:
     get_carsforsale_data('Toyota','Camry', '2012', '2015')
-    sleep_timer = random.randrange(120, 240)
+    sleep_timer = random.randrange(60, 140, 2)
     print(sleep_timer)
     sleep(sleep_timer)
     print("waking up...")
