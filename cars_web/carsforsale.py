@@ -166,13 +166,14 @@ def get_carsforsale_data1(make, model, min_year, max_year):
         driver.close()
         pass
 
-
+'''
 while True:
     get_carsforsale_data('Toyota','Camry', '2012', '2015')
     sleep_timer = random.randrange(60, 140, 2)
     print(sleep_timer)
     sleep(sleep_timer)
     print("waking up...")
+'''
 #get_cars_data(33583, 55767)
 #get_auto_trader_data()
 #get_cars_data()
