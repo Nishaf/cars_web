@@ -133,5 +133,6 @@ def get_cars_dot_com_years(request):
 
         driver.close()
         return years_list
-    except:
+    except Exception as e:
+        print(e)
         return None
