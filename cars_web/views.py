@@ -79,14 +79,14 @@ class RetrieveAutoTraderResults(View):
             if request.GET.get('years'):
                 years = get_cars_dot_com_years(request)
                 return JsonResponse({'res': 'success', 'years': years})
-            print('here')
+            print('Acquiring Lock')
             self.lock.acquire()
             print("Working")
             make, model, new_cars = self.get_cars_results(request)
             cars_data = list(CarsDetails.objects.filter(website='cars.com', make=make, model=model).all()
                              .values())
             self.lock.release()
-
+            print("Lock Released!")
             print("CARS: " +str(len(cars_data)))
             if cars_data and len(cars_data) != 0 and new_cars != "Exception":
                 if new_cars and len(new_cars) != 0:
