@@ -62,7 +62,7 @@ def get_cars_data(make, model, min_year, max_year):
         display.start()
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--no-sandbox")
-        driver = webdriver.Chrome(BASE_DIR + "/chromedriver_linux", chrome_options=chrome_options)
+        driver = webdriver.Chrome(BASE_DIR + "/chromedriver", chrome_options=chrome_options)
         driver.implicitly_wait(20)
         driver.get(url1)
         #data = requests.get(url1, headers=headers1, timeout=60)
@@ -92,8 +92,11 @@ def get_cars_data(make, model, min_year, max_year):
         return new_cars
     except Exception as e:
         print(e)
-        driver.close()
-        return "Exception"
+        try:
+            driver.close()
+            return "Exception"
+        except:
+            return "Exception"
 
 
 #get_cars_data('Acura', 'RLX', '2014', '2018')
@@ -105,7 +108,7 @@ def get_cars_dot_com_years(request):
         display.start()
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--no-sandbox")
-        driver = webdriver.Chrome(BASE_DIR + "/chromedriver_linux", chrome_options=chrome_options,)
+        driver = webdriver.Chrome(BASE_DIR + "/chromedriver_linux", chrome_options=chrome_options)
         driver.implicitly_wait(20)
         print('Hello')
         make, model = (request.GET.get('make')).strip(), (request.GET.get('model')).strip()
@@ -137,5 +140,8 @@ def get_cars_dot_com_years(request):
         return years_list
     except Exception as e:
         print(e)
-        driver.close()
-        return None
+        try:
+            driver.close()
+            return None
+        except:
+            return None
