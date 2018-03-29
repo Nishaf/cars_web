@@ -67,10 +67,10 @@ def get_cars_data(make, model, min_year, max_year):
         driver.get(url1)
         #data = requests.get(url1, headers=headers1, timeout=60)
         soup = BeautifulSoup(driver.page_source)
-        driver.close()
         listings_list = soup.find('div', attrs={'id': 'srp-listing-rows-container'})
         listing = listings_list.find_all('div', attrs={'class': 'shop-srp-listings__listing'})
         print(len(listing))
+        driver.close()
         new_cars = []
         if CarsDetails.objects.filter(website='cars.com', make=make, model=model).count() > 0:
             for item in listing:
