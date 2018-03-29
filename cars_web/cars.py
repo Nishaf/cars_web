@@ -62,7 +62,7 @@ def get_cars_data(make, model, min_year, max_year):
         display.start()
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--no-sandbox")
-        driver = webdriver.Chrome(BASE_DIR + "/chromedriver", chrome_options=chrome_options)
+        driver = webdriver.Chrome(BASE_DIR + "/chromedriver_linux", chrome_options=chrome_options)
         driver.implicitly_wait(20)
         driver.get(url1)
         #data = requests.get(url1, headers=headers1, timeout=60)
