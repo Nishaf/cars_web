@@ -61,7 +61,7 @@ def get_auto_trader_data(make, model, min_year, max_year):
 
     except Exception as e:
         print(e)
-        pass
+        return 'Exception'
 
 
 
