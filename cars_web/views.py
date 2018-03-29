@@ -62,7 +62,7 @@ class RetrieveAutoTraderResults(View):
             cars_data = list(CarsDetails.objects.filter(website='autotrader.com', make=make,model=model).all()
                              .values())
             self.lock.release()
-            if cars_data is not None and len(cars_data) != 0 and new_cars != 'Exception':
+            if cars_data and len(cars_data) != 0 and new_cars != 'Exception':
                 if new_cars and len(new_cars) != 0:
                     print("Length: " + str(len(new_cars)))
                     email = request.GET.get('email')
@@ -97,7 +97,7 @@ class RetrieveAutoTraderResults(View):
                         print(email)
                         send_email(new_cars, email)
 
-                    return JsonResponse({'res': 'success', 'cars_details': cars_data})
+                return JsonResponse({'res': 'success', 'cars_details': cars_data})
             else:
                 return JsonResponse({'res': 'error'})
 
