@@ -48,6 +48,7 @@ def get_cars_data(make, model, min_year, max_year):
     try:
         car = CarModels.objects.filter(website='cars.com', make=make, model=model).first()
         years = get_years(min_year, max_year)
+        print("got years")
         url1 = 'https://www.cars.com/for-sale/searchresults.action/?mdId=' + str(car.make_value) + '&mkId=' \
                + str(car.model_value) + '&page=1&perPage=100' \
                '&rd=99999&sort=listed-newest&zc=75229&searchSource=GN_REFINEMENT&showMore=true'
@@ -104,8 +105,8 @@ def get_cars_dot_com_years(request):
         display.start()
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--no-sandbox")
-        driver = webdriver.Chrome(BASE_DIR + "/chromedriver_linux", chrome_options=chrome_options)
-        driver.implicitly_wait(30)
+        driver = webdriver.Chrome(BASE_DIR + "/chromedriver_linux", chrome_options=chrome_options,)
+        driver.implicitly_wait(20)
         print('Hello')
         make, model = (request.GET.get('make')).strip(), (request.GET.get('model')).strip()
         car = CarModels.objects.filter(website='cars.com', make=make, model=model).first()
