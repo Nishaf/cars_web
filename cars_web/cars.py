@@ -91,6 +91,7 @@ def get_cars_data(make, model, min_year, max_year):
         return new_cars
     except Exception as e:
         print(e)
+        driver.close()
         return "Exception"
 
 
@@ -135,4 +136,5 @@ def get_cars_dot_com_years(request):
         return years_list
     except Exception as e:
         print(e)
+        driver.close()
         return None
