@@ -41,6 +41,8 @@ def get_auto_trader_data(make, model, min_year, max_year):
         soup = BeautifulSoup(data.text)
         premium_listing = soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-premium'})
         listing = premium_listing + soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-featured'})
+        if len(premium_listing) == 0 and len(listing) == 0:
+            return 'Exception'
         if soup.find('strong', attrs={'class': 'text-xlg text-normal'}) is not None:
             print("No Data Found")
             return
@@ -66,6 +68,7 @@ def get_auto_trader_data(make, model, min_year, max_year):
             title = title_data.text.strip()
             link = "https://www.autotrader.com" + title_data.get('href')
             save_data('autotrader.com', make, model, title, link)
+
         return new_cars
 
     except Exception as e:
