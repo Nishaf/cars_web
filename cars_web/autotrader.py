@@ -8,7 +8,6 @@ from bs4 import BeautifulSoup
 from cars_web.models import CarsDetails
 from cars_web.extra_functions import delete_previous_results, save_data
 
-
 headers = {'Pragma': 'no-cache',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US;q=0.9,en;q=0.8',
