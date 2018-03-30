@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 from cars_web.models import CarsDetails
 from cars_web.extra_functions import delete_previous_results, save_data
 
+
 headers = {'Pragma': 'no-cache',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US;q=0.9,en;q=0.8',
@@ -17,7 +18,9 @@ headers = {'Pragma': 'no-cache',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
             'Cache-Control': 'no-cache',
             'Connection': 'keep-alive',
-            'Save-Data': 'on'
+            'Save-Data': 'on',
+            'referer': "https://www.autotrader.com",
+            'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
            }
 
 
@@ -25,9 +28,11 @@ def get_auto_trader_data(make, model, min_year, max_year):
     try:
         print('Retrieving Results....')
         url = 'https://www.autotrader.com/cars-for-sale/'
-        url_changed = url + make + "/" + model + "/?startYear=" +min_year+ "&endYear=" + max_year + "&numRecords=100"
+        url_changed = url + make + "/" + model + "/?startYear=" + min_year + "&endYear=" + max_year + "&numRecords=100"
         print(url_changed)
-        data = requests.get(url_changed, headers=headers, timeout=60)
+        data = requests.get("https://www.google.com")
+        print(data.status_code)
+        data = requests.get(url_changed, headers=headers, timeout=30)
         print(data.status_code)
         soup = BeautifulSoup(data.text)
         premium_listing = soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-premium'})

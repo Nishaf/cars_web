@@ -59,7 +59,7 @@ class RetrieveAutoTraderResults(View):
             self.lock.acquire()
             print("Working")
             make, model, new_cars = self.get_auto_traders_results(request)
-            cars_data = list(CarsDetails.objects.filter(website='autotrader.com', make=make,model=model).all()
+            cars_data = list(CarsDetails.objects.filter(website='autotrader.com', make=make, model=model).all()
                              .values())
             self.lock.release()
             if cars_data and len(cars_data) != 0 and new_cars != 'Exception':
