@@ -8,6 +8,11 @@ from bs4 import BeautifulSoup
 from cars_web.models import CarsDetails
 from cars_web.extra_functions import delete_previous_results, save_data
 
+# p = "https://admin123:admin123@8.29.123.111:27401"
+# p = "https://52.224.181.154:3128"
+https = "https://66.82.144.29:8080"
+http = "http://66.82.144.29:8080"
+proxy = {'https': https, 'http': http}
 headers = {'Pragma': 'no-cache',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US;q=0.9,en;q=0.8',
@@ -18,8 +23,8 @@ headers = {'Pragma': 'no-cache',
             'Cache-Control': 'no-cache',
             'Connection': 'keep-alive',
             'Save-Data': 'on',
-            'referer': "https://www.autotrader.com",
-            'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+            # 'referer': "https://www.autotrader.com",
+            # 'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
            }
 
 
@@ -29,9 +34,9 @@ def get_auto_trader_data(make, model, min_year, max_year):
         url = 'https://www.autotrader.com/cars-for-sale/'
         url_changed = url + make + "/" + model + "/?startYear=" + min_year + "&endYear=" + max_year + "&numRecords=100"
         print(url_changed)
-        data = requests.get("https://www.google.com")
+        data = requests.get("https://www.google.com", proxies=proxy)
         print(data.status_code)
-        data = requests.get(url_changed, headers=headers, timeout=30)
+        data = requests.get(url_changed, headers=headers, proxies=proxy, timeout=30)
         print(data.status_code)
         soup = BeautifulSoup(data.text)
         premium_listing = soup.find_all('div', attrs={'data-qaid': 'cntnr-lstng-premium'})
