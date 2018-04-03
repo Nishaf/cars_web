@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9c5c53bd-f0e0-4237-b894-114ff5df938d" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/cars_scrapers/cargurus.py" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/cars_web/autotrader.py" afterPath="$PROJECT_DIR$/cars_scrapers/autotrader.py" />
-      <change beforePath="$PROJECT_DIR$/cars_web/cars.py" afterPath="$PROJECT_DIR$/cars_scrapers/cars.py" />
-      <change beforePath="$PROJECT_DIR$/cars_web/carsforsale.com.py" afterPath="$PROJECT_DIR$/cars_scrapers/carsforsale.com.py" />
-      <change beforePath="$PROJECT_DIR$/cars_web/carsforsale.py" afterPath="$PROJECT_DIR$/cars_scrapers/carsforsale.py" />
-      <change beforePath="$PROJECT_DIR$/cars_web/get_models.py" afterPath="$PROJECT_DIR$/cars_scrapers/get_models.py" />
-      <change beforePath="$PROJECT_DIR$/cars_web/new_cars.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cars_web/views.py" afterPath="$PROJECT_DIR$/cars_web/views.py" />
-      <change beforePath="$PROJECT_DIR$/templates/homepage.html" afterPath="$PROJECT_DIR$/templates/homepage.html" />
+      <change beforePath="$PROJECT_DIR$/cars_scrapers/get_models.py" afterPath="$PROJECT_DIR$/cars_scrapers/get_models.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -117,7 +109,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cargurus.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="cargurus.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cars_scrapers/cargurus.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1880">
@@ -127,11 +119,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="get_models.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="get_models.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cars_scrapers/get_models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1830">
-              <caret line="122" column="20" lean-forward="false" selection-start-line="122" selection-start-column="20" selection-end-line="122" selection-end-column="20" />
+            <state relative-caret-position="331">
+              <caret line="180" column="0" lean-forward="true" selection-start-line="180" selection-start-column="0" selection-end-line="180" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -199,6 +191,7 @@
         <option value="$USER_HOME$/Downloads/pandas_tutorial-master/climate_timeseries/climate_timeseries-Part1.ipynb" />
         <option value="$PROJECT_DIR$/cars_web/autotrader.py" />
         <option value="$PROJECT_DIR$/cars_scrapers/cargurus.py" />
+        <option value="$PROJECT_DIR$/cars_scrapers/get_models.py" />
       </list>
     </option>
   </component>
@@ -237,6 +230,11 @@
             <path>
               <item name="cars_web" type="b2602c69:ProjectViewProjectNode" />
               <item name="cars_web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cars_web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cars_web" type="462c0819:PsiDirectoryNode" />
+              <item name="cars_scrapers" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -681,13 +679,6 @@
       <option name="presentableId" value="Default" />
       <updated>1516867353645</updated>
     </task>
-    <task id="LOCAL-00062" summary="chromedriver">
-      <created>1521549747873</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1521549747873</updated>
-    </task>
     <task id="LOCAL-00063" summary="chromedriver">
       <created>1521549891905</created>
       <option name="number" value="00063" />
@@ -1024,7 +1015,14 @@
       <option name="project" value="LOCAL" />
       <updated>1522422783099</updated>
     </task>
-    <option name="localTasksCounter" value="111" />
+    <task id="LOCAL-00111" summary="Car Years Implemented.">
+      <created>1522755359274</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1522755359274</updated>
+    </task>
+    <option name="localTasksCounter" value="112" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1451,14 +1449,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cars_scrapers/get_models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1830">
-          <caret line="122" column="20" lean-forward="false" selection-start-line="122" selection-start-column="20" selection-end-line="122" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cars_scrapers/carsforsale.com.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -1544,6 +1534,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1880">
           <caret line="126" column="59" lean-forward="false" selection-start-line="126" selection-start-column="59" selection-end-line="126" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cars_scrapers/get_models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="180" column="0" lean-forward="true" selection-start-line="180" selection-start-column="0" selection-end-line="180" selection-end-column="0" />
           <folding />
         </state>
       </provider>
