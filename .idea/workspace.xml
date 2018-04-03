@@ -112,8 +112,8 @@
       <file leaf-file-name="cargurus.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cars_scrapers/cargurus.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="71" column="50" lean-forward="false" selection-start-line="71" selection-start-column="50" selection-end-line="71" selection-end-column="50" />
+            <state relative-caret-position="130">
+              <caret line="109" column="24" lean-forward="false" selection-start-line="109" selection-start-column="24" selection-end-line="109" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -696,13 +696,6 @@
       <option name="presentableId" value="Default" />
       <updated>1516867353645</updated>
     </task>
-    <task id="LOCAL-00069" summary="chromedriver">
-      <created>1521550831841</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1521550831841</updated>
-    </task>
     <task id="LOCAL-00070" summary="chromedriver">
       <created>1521551084894</created>
       <option name="number" value="00070" />
@@ -1039,7 +1032,14 @@
       <option name="project" value="LOCAL" />
       <updated>1522756516064</updated>
     </task>
-    <option name="localTasksCounter" value="118" />
+    <task id="LOCAL-00118" summary="Car Gurus Scraper Implemented.">
+      <created>1522756772785</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1522756772785</updated>
+    </task>
+    <option name="localTasksCounter" value="119" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1143,7 +1143,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/cars_scrapers/cargurus.py</url>
-          <line>112</line>
+          <line>113</line>
           <option name="timeStamp" value="204" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -1561,8 +1561,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cars_scrapers/cargurus.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="71" column="50" lean-forward="false" selection-start-line="71" selection-start-column="50" selection-end-line="71" selection-end-column="50" />
+        <state relative-caret-position="130">
+          <caret line="109" column="24" lean-forward="false" selection-start-line="109" selection-start-column="24" selection-end-line="109" selection-end-column="24" />
           <folding />
         </state>
       </provider>

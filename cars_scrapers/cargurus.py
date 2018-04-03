@@ -73,7 +73,7 @@ def get_cargurus_data(make, model, min_year, max_year):
         display.start()
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--no-sandbox")
-        driver = webdriver.Chrome(BASE_DIR + "/chromedriver", chrome_options=chrome_options)
+        driver = webdriver.Chrome(BASE_DIR + "/chromedriver_linux", chrome_options=chrome_options)
         driver.implicitly_wait(20)
         driver.get(url)
         print("Hello")
@@ -107,6 +107,7 @@ def get_cargurus_data(make, model, min_year, max_year):
             print("Link: " + link)
             print("====================")
 
+        print("Completed")
         return new_cars
 
     except Exception as e:
