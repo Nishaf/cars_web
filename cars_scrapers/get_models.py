@@ -1,6 +1,6 @@
 import os, sys, django
 
-sys.path.append("/home/cars_web")  # here store is root folder(means parent).
+sys.path.append("/home/nishaf/PycharmProjects/Upwork_Projects")  # here store is root folder(means parent).
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cars_web.settings")
 django.setup()
 
@@ -9,17 +9,18 @@ from pyvirtualdisplay import Display
 from selenium.webdriver.common.keys import Keys
 from time import sleep
 from cars_web.models import CarModels
-import os
+from cars_web.settings import BASE_DIR
 
 
 class PopulateSelectingDatabase:
     def __init__(self):
         display = Display(visible=0, size=(1500,800))
         display.start()
-        self.driver = webdriver.Chrome(os.getcwd() + "/chromedriver")#, chrome_options=self.get_chrome_options())
+        self.driver = webdriver.Chrome(BASE_DIR + "/chromedriver")#, chrome_options=self.get_chrome_options())
         self.autotrader = 'https://www.autotrader.com/'
         self.carsdotcom = 'https://www.cars.com/'
         self.carsforsale = 'https://www.carsforsale.com'
+        self.car_gurus = "https://www.cargurus.com"
 
     def get_chrome_options(self):
         PROXY = '144.217.213.234:1080'
@@ -95,6 +96,37 @@ class PopulateSelectingDatabase:
             make.click()
             sleep(2)
 
+    def run_cargurus(self):
+        self.driver.get(self.car_gurus)
+        print("URL LOADED....")
+        make = self.driver.find_element_by_xpath("//select[@id='carPickerUsed_makerSelect']")
+        make.click()
+        sleep(2)
+        print(len(make.find_elements_by_xpath("//select[@id='carPickerUsed_makerSelect']//optgroup[2]//option")))
+        for i in make.find_elements_by_xpath("//select[@id='carPickerUsed_makerSelect']//optgroup[2]//option")[80:]:
+            model_list = []
+            print("Make: " + i.text.strip() + " ===> " + i.get_attribute('value'))
+            i.click()
+            sleep(2)
+            model = self.driver.find_elements_by_xpath("//select[@id='carPickerUsed_modelSelect']//optgroup//option")
+            if len(model) == 0:
+                model = self.driver.find_elements_by_xpath("//select[@id='carPickerUsed_modelSelect']//option")
+            for j in model:
+                if CarModels.objects.filter(website='cargurus.com', make=i.text.strip(), model=j.text.strip(),
+                                            make_value=i.get_attribute('value'),
+                                            model_value=j.get_attribute('value')).exists():
+                    print("Already Present")
+                    continue
+                else:
+                    CarModels(website='cargurus.com', make=i.text.strip(), model=j.text.strip(),
+                              make_value=i.get_attribute('value'), model_value=j.get_attribute('value')).save()
+                    print(i.text, j.text)
+                    print("Saved")
+            sleep(2)
+            make = self.driver.find_element_by_xpath("//select[@id='carPickerUsed_makerSelect']")
+            make.click()
+            sleep(2)
+
     def run_carsforsale(self):
         while True:
             try:
@@ -149,4 +181,4 @@ class PopulateSelectingDatabase:
 
 
 #CarModels.objects.filter(website='carsforsale.com').all().delete()
-PopulateSelectingDatabase().run_carsdotcom()
+PopulateSelectingDatabase().run_cargurus()

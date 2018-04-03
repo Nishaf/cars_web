@@ -3,9 +3,10 @@ from django.views.generic import View
 from .models import CarsDetails, CarModels
 from django.http import JsonResponse
 import re
-from .autotrader import get_auto_trader_data
+from cars_scrapers.autotrader import get_auto_trader_data
 from cars_web.extra_functions import send_email
-from cars_web.cars import get_cars_data, get_cars_dot_com_years
+from cars_scrapers.cars import get_cars_data, get_cars_dot_com_years
+from cars_scrapers.cargurus import get_cargurus_data, get_cargurus_dot_com_years
 from .global_variables import auto_trader_years_list
 import threading
 
@@ -51,6 +52,11 @@ class RetrieveAutoTraderResults(View):
         new_cars = get_cars_data(make, model, min_year, max_year)
         return make, model, new_cars
 
+    def get_cargurus_results(self, request):
+        make, model, min_year, max_year = self.extract_info(request)
+        new_cars = get_cargurus_data(make, model, min_year, max_year)
+        return make, model, new_cars
+
     def get(self, request):
         website = request.GET['website']
         print(website)
@@ -92,6 +98,32 @@ class RetrieveAutoTraderResults(View):
                 if new_cars and len(new_cars) != 0:
                     print("Length: " + str(len(new_cars)))
                     email = request.GET.get('cars_email')
+                    print(email)
+                    if email:
+                        print(email)
+                        send_email(new_cars, email)
+
+                return JsonResponse({'res': 'success', 'cars_details': cars_data})
+            else:
+                return JsonResponse({'res': 'error'})
+
+        elif website == 'cargurus.com':
+            if request.GET.get('years'):
+                years = get_cargurus_dot_com_years(request)
+                return JsonResponse({'res': 'success', 'years': years})
+            print('Acquiring Lock')
+            self.lock.acquire()
+            print("Working")
+            make, model, new_cars = self.get_cargurus_results(request)
+            cars_data = list(CarsDetails.objects.filter(website='cargurus.com', make=make, model=model).all()
+                             .values())
+            self.lock.release()
+            print("Lock Released!")
+            print("CARS: " + str(len(cars_data)))
+            if cars_data and len(cars_data) != 0 and new_cars != "Exception":
+                if new_cars and len(new_cars) != 0:
+                    print("Length: " + str(len(new_cars)))
+                    email = request.GET.get('cargurus_email')
                     print(email)
                     if email:
                         print(email)

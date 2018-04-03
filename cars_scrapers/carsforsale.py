@@ -25,6 +25,32 @@ p = "65.181.112.70:2018"
 proxy = {'https': p, 'http': p}
 
 
+def car_gurus():
+    url = "https://www.cargurus.com/Cars/inventorylisting/viewDetailsFilterViewInventoryListing.action?" \
+          "sourceContext=carGurusHomePage_false_0&newSearchFromOverviewPage=true&inventorySearchWidgetType=AUTO&" \
+          "entitySelectingHelper.selectedEntity=d36&entitySelectingHelper.selectedEntity2=c1063&zip=75209&distance=50&" \
+          "searchChanged=true&modelChanged=true&filtersModified=true"
+    # data = requests.get("https://www.cargurus.com/Cars/new/searchresults.action?sourceContext=homePageNewCarTab_false_0"
+    #                    "&selectedEntity=d295&zip=")
+    '''https://www.cargurus.com/Cars/inventorylisting/viewDetailsFilterViewInventoryListing.action?
+    sourceContext=homePageNewCarTab_false_0&newSearchFromOverviewPage=true&inventorySearchWidgetType=AUTO&
+    entitySelectingHelper.selectedEntity=d292&entitySelectingHelper.selectedEntity2=&zip=&distance=50&searchChanged=true
+    &modelChanged=true&filtersModified=true'''
+    data = requests.get("https://www.cargurus.com/Cars/inventorylisting/viewDetailsFilterViewInventoryListing.action?"
+                        "sourceContext=carGurusHomePage_false_0&newSearchFromOverviewPage=true&"
+                        "inventorySearchWidgetType=AUTO&entitySelectingHelper.selectedEntity=c1119&"
+                        "entitySelectingHelper.selectedEntity2=c1091&zip=")
+
+    # entitySelectingHelper.selectedEntity=c1096    Starting Year
+    # entitySelectingHelper.selectedEntity2=c1063   Ending Year
+    print(data.status_code)
+    soup = BeautifulSoup(data.text)
+    print(soup)
+
+
+car_gurus()
+
+
 def get_carsforsale_data(make, model, min_year, max_year):
     try:
         url = "https://www.carsforsale.com/Search?Make=Toyota&Model=Camry&MinModelYear=2009&MaxModelYear=2012&PageNumber=%s&OrderBy=Relevance&OrderDirection=Desc"
