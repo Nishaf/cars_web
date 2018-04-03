@@ -69,11 +69,11 @@ def get_cargurus_data(make, model, min_year, max_year):
 
         print(url)
         print('Loading Data....')
-        display = Display(visible=0, size=(800, 600))
+        display = Display(visible=0, size=(1500, 800))
         display.start()
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--no-sandbox")
-        driver = webdriver.Chrome(BASE_DIR + "/chromedriver_linux", chrome_options=chrome_options)
+        driver = webdriver.Chrome(BASE_DIR + "/chromedriver", chrome_options=chrome_options)
         driver.implicitly_wait(20)
         driver.get(url)
         print("Hello")
@@ -82,7 +82,6 @@ def get_cargurus_data(make, model, min_year, max_year):
         while pages < 6:
             try:
                 driver.find_element_by_xpath("//a[@class='nextPageElement js-go-to-next-page ']").click()
-                sleep(1)
                 all_listing += get_all_listings(driver)
                 pages += 1
             except:
