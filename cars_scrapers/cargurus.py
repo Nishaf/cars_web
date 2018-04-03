@@ -76,6 +76,7 @@ def get_cargurus_data(make, model, min_year, max_year):
         driver = webdriver.Chrome(BASE_DIR + "/chromedriver_linux", chrome_options=chrome_options)
         driver.implicitly_wait(20)
         driver.get(url)
+        print("Hello")
         all_listing = get_all_listings(driver)
         pages = 1
         while pages < 6:
