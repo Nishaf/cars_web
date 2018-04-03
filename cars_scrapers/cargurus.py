@@ -87,7 +87,7 @@ def get_cargurus_data(make, model, min_year, max_year):
                 pages += 1
             except:
                 break
-
+        print(pages)
         driver.close()
         print(len(all_listing))
         new_cars = []
