@@ -1,6 +1,7 @@
-import os, sys, django
+import os, sys,  django
+from cars_web.settings import BASE_DIR
 
-sys.path.append("/home/nishaf/PycharmProjects/Upwork_Projects")  # here store is root folder(means parent).
+sys.path.append(BASE_DIR)  # here store is root folder(means parent).
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cars_web.settings")
 django.setup()
 
@@ -16,7 +17,7 @@ class PopulateSelectingDatabase:
     def __init__(self):
         display = Display(visible=0, size=(1500,800))
         display.start()
-        self.driver = webdriver.Chrome(BASE_DIR + "/chromedriver_linux")#, chrome_options=self.get_chrome_options())
+        self.driver = webdriver.Chrome(BASE_DIR + "/chromedriver")#, chrome_options=self.get_chrome_options())
         self.autotrader = 'https://www.autotrader.com/'
         self.carsdotcom = 'https://www.cars.com/'
         self.carsforsale = 'https://www.carsforsale.com'
